@@ -18,20 +18,16 @@ gem 'rake'
 
 # Component requirements
 gem 'haml'
-gem 'sqlite3'
 gem 'sequel'
 
-# Test requirements
-gem 'rspec', :group => 'test'
-gem 'rack-test', :require => 'rack/test', :group => 'test'
-
-# Padrino Stable Gem
 gem 'padrino', '0.13.2'
 
-# Or Padrino Edge
-# gem 'padrino', :github => 'padrino/padrino-framework'
+group :test do
+  gem 'rspec'
+  gem 'rack-test', :require => 'rack/test'
+  gem 'database_cleaner'
+end
 
-# Or Individual Gems
-# %w(core support gen helpers cache mailer admin).each do |g|
-#   gem 'padrino-' + g, '0.13.2'
-# end
+group :development do
+  gem 'sqlite3'
+end

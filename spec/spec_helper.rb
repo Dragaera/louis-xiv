@@ -4,6 +4,17 @@ Dir[File.expand_path(File.dirname(__FILE__) + "/../app/helpers/**/*.rb")].each(&
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
+
+  conf.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with :truncation
+  end 
+
+  conf.around(:each) do |spec|
+    DatabaseCleaner.cleaning do
+      spec.run
+    end
+  end
 end
 
 # You can use this method to custom specify a Rack app
