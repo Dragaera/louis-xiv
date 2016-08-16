@@ -1,10 +1,10 @@
 class MakerEvent < Sequel::Model
   def self.active
-    MakerEvent.where(is_active: true)
+    MakerEvent.where(active: true)
   end
 
   def self.inactive
-    MakerEvent.where(is_active: false)
+    MakerEvent.where(active: false)
   end
 
   plugin :validation_helpers
@@ -15,5 +15,5 @@ class MakerEvent < Sequel::Model
     validates_unique :event
   end
 
-  alias_method :is_active?, :is_active
+  alias_method :active?, :active
 end

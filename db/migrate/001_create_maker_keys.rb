@@ -3,8 +3,8 @@ Sequel.migration do
     create_table :maker_keys do
       primary_key :id
 
-      String :key,       null: false
-      Bool   :is_active, null: false, default: true
+      String :key,    null: false
+      Bool   :active, null: false, default: true
 
       unique :key
     end

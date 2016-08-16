@@ -1,10 +1,10 @@
 class MakerKey < Sequel::Model
   def self.active
-    MakerKey.where(is_active: true)
+    MakerKey.where(active: true)
   end
 
   def self.inactive
-    MakerKey.where(is_active: false)
+    MakerKey.where(active: false)
   end
 
   plugin :validation_helpers
@@ -15,5 +15,5 @@ class MakerKey < Sequel::Model
     validates_unique :key
   end
 
-  alias_method :is_active?, :is_active
+  alias_method :active?, :active
 end
