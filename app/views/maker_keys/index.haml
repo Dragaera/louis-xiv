@@ -8,6 +8,7 @@
     %tr
       %th Key
       %th Last Used
+      %th Active
       %th
 
   %tbody
@@ -15,6 +16,11 @@
       %tr
         %td= link_to "#{ key.name } (#{ truncate(key.key, length: 10) })", url(:maker_keys, :show, id: key.id)
         %td= pretty_print_date(key.used_at, ago: true, alt: '(never)')
+        %td
+          - if key.active
+            %span.glyphicon.glyphicon-ok
+          - else
+            %span.glyphicon.glyphicon-remove
         %td
           %a{ href: url(:maker_keys, :edit, id: key.id) }
             %span.glyphicon.glyphicon-edit

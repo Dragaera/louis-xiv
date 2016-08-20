@@ -1,4 +1,11 @@
-%h1= "Maker key: #{ @maker_key.name }"
+%h1 
+  = "Maker key: #{ @maker_key.name }"
+  - if @maker_key.active
+    %span.label.label-success
+      Active
+  - else
+    %span.label.label-default
+      Inactive
 
 .row
   .col-md-6
@@ -8,6 +15,13 @@
         %tr
           %td Key
           %td= @maker_key.key
+        %tr
+          %td Active
+          %td
+            - if @maker_key.active
+              %span.glyphicon.glyphicon-ok
+            - else
+              %span.glyphicon.glyphicon-remove
         %tr
           %td Used at
           %td= pretty_print_date(@maker_key.used_at, ago: true, alt: '(never)')
