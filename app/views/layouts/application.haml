@@ -12,4 +12,17 @@
 
   %body
     .container
+      .flash
+        - if flash[:error]
+          .alert.alert-danger{role: :alert}= flash[:error]
+
+        - if flash[:notice]
+          .alert.alert-warning{role: :alert}= flash[:notice]
+
+        - if flash[:info]
+          .alert.alert-info{role: :alert}= flash[:info]
+
+        - if flash[:success]
+          .alert.alert-success{role: :alert}= flash[:success]
+
       = yield(:content)

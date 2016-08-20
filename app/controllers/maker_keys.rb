@@ -22,7 +22,7 @@ LouisXiv::App.controllers :maker_keys do
 
     if maker_key.valid?
       maker_key.save
-      redirect url(:maker_keys, :index)
+      redirect(url(:maker_keys, :index), success: "Created Maker key #{ maker_key.name }")
     else
       # @Todo: Marshal: Avoid full objects in session
       session['maker_key'] = maker_key
