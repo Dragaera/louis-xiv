@@ -13,7 +13,11 @@ RSpec.describe 'LouisXiv::App::DateTimeHelper' do
 
     it 'should contain an optional "... ago" string' do
       expect(subject).to receive(:time_ago_in_words).and_return('sometime')
-      expect(subject.pretty_print_date(date, true)).to eq '01.02.2016 10:11:12 (sometime ago)'
+      expect(subject.pretty_print_date(date, ago: true)).to eq '01.02.2016 10:11:12 (sometime ago)'
+    end
+
+    it 'should return the alt-text if date is nil' do
+      expect(subject.pretty_print_date(nil, alt: '(never)')).to eq '(never)'
     end
   end
 end

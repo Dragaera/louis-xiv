@@ -2,7 +2,7 @@
 
 module LouisXiv
   class App
-    module ModelHelperHelper
+    module ModelHelper
       def get_or_404(cls, key, msg = nil)
         obj = cls[key]
 
@@ -15,6 +15,6 @@ module LouisXiv
       end
     end
 
-    helpers ModelHelperHelper
+    helpers ModelHelper
   end
 end
