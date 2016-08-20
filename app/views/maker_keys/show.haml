@@ -1,0 +1,25 @@
+%h1= "Maker key: #{ @maker_key.name }"
+
+.row
+  .col-md-6
+    %h2 Details
+    %table.table.table-bordered
+      %tbody
+        %tr
+          %td Key
+          %td= @maker_key.key
+        %tr
+          %td Used at
+          %td= pretty_print_date(@maker_key.used_at, ago: true, alt: '(never)')
+        %tr
+          %td Created at
+          %td= pretty_print_date(@maker_key.created_at, alt: '(never)')
+        %tr
+          %td Updated at
+          %td= pretty_print_date(@maker_key.updated_at, alt: '(never)')
+
+  .col-md-6
+    %h2 Used in actions
+    .list-group
+      - @maker_key.maker_actions.each do |action|
+        = 'TODO' # link_to(action.name, url(:maker_actions, :show, id: action.id) ,class: 'list-group-item')

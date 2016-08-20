@@ -6,6 +6,8 @@ LouisXiv::App.controllers :maker_keys do
   end
 
   get :show, map: '/maker_keys/:id' do
+    @maker_key = get_or_404(:maker_key, params.fetch('id').to_i)
+    render 'show'
   end
 
   get :new do
