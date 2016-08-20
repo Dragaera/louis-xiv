@@ -16,4 +16,6 @@ class MakerKey < Sequel::Model
   end
 
   alias_method :active?, :active
+
+  one_to_many :maker_actions
 end
