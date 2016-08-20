@@ -16,13 +16,6 @@
           %td Key
           %td= @maker_key.key
         %tr
-          %td Active
-          %td
-            - if @maker_key.active
-              %span.glyphicon.glyphicon-ok
-            - else
-              %span.glyphicon.glyphicon-remove
-        %tr
           %td Used at
           %td= pretty_print_date(@maker_key.used_at, ago: true, alt: '(never)')
         %tr
