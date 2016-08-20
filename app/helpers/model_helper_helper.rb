@@ -3,9 +3,7 @@
 module LouisXiv
   class App
     module ModelHelperHelper
-      def get_or_404(identifier, key, msg = nil)
-        cls = Kernel.const_get(identifier.to_s.camelize)
-
+      def get_or_404(cls, key, msg = nil)
         obj = cls[key]
 
         if obj.nil?
