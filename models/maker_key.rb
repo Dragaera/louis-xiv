@@ -7,6 +7,10 @@ class MakerKey < Sequel::Model
     MakerKey.where(active: false)
   end
 
+  def before_validation
+    self.name = key if name.nil? || name.empty?
+  end
+
   plugin :validation_helpers
 
   def validate

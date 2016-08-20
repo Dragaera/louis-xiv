@@ -12,6 +12,10 @@ RSpec.describe MakerEvent do
     it 'should set the default value of #active' do
       expect(@event1).to be_active
     end
+
+    it 'should set the default value of #name' do
+      expect(@event1.name).to eq @event1.event
+    end
   end
 
   describe '#valid?' do

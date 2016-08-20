@@ -9,6 +9,12 @@ class MakerAction < Sequel::Model
     MakerAction.all.reject { |action| action.is_active? }
   end
 
+  def before_validation
+    if (name.nil? || name.empty?) && maker_event && maker_key
+      self.name = "#{ maker_event.name } @ #{ maker_key.name }"
+    end
+  end
+
   plugin :validation_helpers
 
   def validate

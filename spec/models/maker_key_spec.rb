@@ -13,6 +13,11 @@ RSpec.describe MakerKey do
       key = MakerKey.create(key: 'asdf')
       expect(key).to be_active
     end
+
+    it 'should set the default value of #name' do
+      key = MakerKey.create(key: 'asdf')
+      expect(key.name).to eq key.key
+    end
   end
 
   describe '#valid?' do
