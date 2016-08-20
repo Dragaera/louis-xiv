@@ -5,15 +5,34 @@ LouisXiv::App.controllers :maker_keys do
     render 'index'
   end
 
-  get :show, map: '/maker_keys/:id' do
-    @maker_key = get_or_404(:maker_key, params.fetch('id').to_i)
-    render 'show'
-  end
-
   get :new do
+    @maker_key = session['maker_key'] || MakerKey.new
+    session.delete 'maker_key'
+
+    render 'new'
   end
 
   post :new do
+    opts = params.fetch('maker_key')
+    maker_key = MakerKey.new(
+      name:   opts.fetch('name'),
+      key:    opts.fetch('key'),
+      active: to_bool(opts.fetch('active'))
+    )
+
+    if maker_key.valid?
+      maker_key.save
+      redirect url(:maker_keys, :index)
+    else
+      # @Todo: Marshal: Avoid full objects in session
+      session['maker_key'] = maker_key
+      redirect(url(:maker_keys, :new), form_error: pp_form_errors(maker_key.errors))
+    end
+  end
+
+  get :show, map: '/maker_keys/:id' do
+    @maker_key = get_or_404(:maker_key, params.fetch('id').to_i)
+    render 'show'
   end
 
   get :edit, map: '/maker_keys/:id/edit' do
