@@ -3,9 +3,13 @@
 module LouisXiv
   class App
     module DateTimeHelper
-      def pretty_print_date(date, add_ago = false)
-        out = date.strftime('%d.%m.%Y %H:%M:%S')
-        out << " (#{ time_ago_in_words(date) } ago)" if add_ago
+      def pretty_print_date(date, ago: false, alt: '')
+        if date
+          out = date.strftime('%d.%m.%Y %H:%M:%S')
+          out << " (#{ time_ago_in_words(date) } ago)" if ago
+        else
+          out = alt
+        end
 
         out
       end
