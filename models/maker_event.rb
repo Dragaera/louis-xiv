@@ -10,7 +10,7 @@ class MakerEvent < Sequel::Model
   plugin :validation_helpers
 
   def validate
-    validates_presence [:event]
+    validates_presence [:event, :name]
 
     validates_unique :event
   end

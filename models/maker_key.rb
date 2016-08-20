@@ -10,7 +10,7 @@ class MakerKey < Sequel::Model
   plugin :validation_helpers
 
   def validate
-    validates_presence [:key]
+    validates_presence [:key, :name]
 
     validates_unique :key
   end

@@ -12,7 +12,7 @@ class MakerAction < Sequel::Model
   plugin :validation_helpers
 
   def validate
-    validates_presence [:maker_event_id, :maker_key_id]
+    validates_presence [:maker_event_id, :maker_key_id, :name]
 
     validates_unique [:maker_event_id, :maker_key_id]
   end
