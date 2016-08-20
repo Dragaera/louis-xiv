@@ -3,9 +3,18 @@
 module LouisXiv
   class App
     module ModelHelperHelper
-      # def simple_helper_method
-      # ...
-      # end
+      def get_or_404(identifier, key, msg = nil)
+        cls = Kernel.const_get(identifier.to_s.camelize)
+
+        obj = cls[key]
+
+        if obj.nil?
+          msg = "No #{ cls.name } with id #{ key }" unless msg
+          raise Sinatra::NotFound, msg
+        end
+
+        obj
+      end
     end
 
     helpers ModelHelperHelper
