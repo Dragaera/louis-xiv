@@ -46,4 +46,6 @@ RSpec.describe "LouisXiv::App::ApplicationHelper" do
       end
     end
   end
+
+  pending '::pp_form_errors'
 end
