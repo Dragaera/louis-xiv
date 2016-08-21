@@ -1,0 +1,25 @@
+.page-header
+  %h1
+    IFTT
+    %small Maker events
+
+%a{ href: url(:maker_events, :new) }
+  %span.glyphicon.glyphicon-plus
+
+%table.table
+  %thead
+    %tr
+      %th Event
+      %th last Used
+      %th Active
+
+    %tbody
+      - @maker_events.each do |event|
+        %tr
+          %td= link_to "#{ event.name } (#{ truncate(event.event, length: 10) })", url(:maker_events, :show, id: event.id)
+          %td= pretty_print_date(event.used_at, ago: true, alt: '(never)')
+          %td
+            - if event.active
+              %span.glyphicon.glyphicon-ok
+            - else
+              %span.glyphicon.glyphicon-remove
