@@ -12,6 +12,17 @@
     = javascript_include_tag 'bootstrap.min'
 
   %body
+    %nav.navbar.navbar-default.navbar-static-top
+      .container
+        .navbar-header
+          %a.navbar-brand{ href: '/' }
+            Louis XIV
+
+        #navbar.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li
+              = link_to 'Maker Keys', url(:maker_keys, :index)
+
     .container
       .flash
         - if flash[:error]
