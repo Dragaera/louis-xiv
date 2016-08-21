@@ -9,7 +9,6 @@
       %th Key
       %th Last Used
       %th Active
-      %th
 
   %tbody
     - @maker_keys.each do |key|
@@ -21,6 +20,3 @@
             %span.glyphicon.glyphicon-ok
           - else
             %span.glyphicon.glyphicon-remove
-        %td
-          %a{ href: url(:maker_keys, :edit, id: key.id) }
-            %span.glyphicon.glyphicon-edit

@@ -10,10 +10,13 @@
         Inactive
 
 .row
-  .col-md-12
-    = form_tag url(:maker_keys, :delete, id: @maker_key.id), method: 'post' do
-      = submit_tag 'Delete', class: 'btn btn-danger'
+  .col-md-6
+    %a{ href: url(:maker_keys, :edit, id: @maker_key.id), class: 'btn btn-primary' }
+      Edit
+      %span.glyphicon.glyphicon-edit
 
+    = form_tag url(:maker_keys, :delete, id: @maker_key.id), method: 'post', class: 'btn' do
+      = submit_tag 'Delete', class: 'btn btn-danger'
 .row
   .col-md-6
     %h2 Details
