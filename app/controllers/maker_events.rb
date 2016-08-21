@@ -13,12 +13,7 @@ LouisXiv::App.controllers :maker_events do
   end
 
   post :new do
-    opts = params.fetch('maker_event')
-    maker_event = MakerEvent.new(
-      name:   opts.fetch('name'),
-      event:  opts.fetch('event'),
-      active: to_bool(opts.fetch('active'))
-    )
+    maker_event = MakerEvent.new(params.fetch('maker_event'))
 
     if maker_event.valid?
       maker_event.save
@@ -42,11 +37,10 @@ LouisXiv::App.controllers :maker_events do
 
   post :edit, map: '/maker_events/:id/edit' do
     maker_event = get_or_404(MakerEvent, params.fetch('id').to_i)
-    maker_event_params = params.fetch('maker_event')
 
-    maker_event.name   = maker_event_params['name'] if maker_event_params.key? 'name'
-    maker_event.event  = maker_event_params['event'] if maker_event_params.key? 'event'
-    maker_event.active = to_bool(maker_event_params['active']) if maker_event_params.key? 'active'
+    maker_event_params = params.fetch('maker_event')
+    maker_event_params['active'] = to_bool(maker_event_params['active']) if maker_event_params.key? 'active'
+    maker_event.set(maker_event_params)
 
     if maker_event.valid?
       maker_event.save

@@ -13,12 +13,7 @@ LouisXiv::App.controllers :maker_keys do
   end
 
   post :new do
-    opts = params.fetch('maker_key')
-    maker_key = MakerKey.new(
-      name:   opts.fetch('name'),
-      key:    opts.fetch('key'),
-      active: to_bool(opts.fetch('active'))
-    )
+    maker_key = MakerKey.new(params.fetch('maker_key'))
 
     if maker_key.valid?
       maker_key.save
@@ -44,11 +39,10 @@ LouisXiv::App.controllers :maker_keys do
 
   post :edit, map: '/maker_keys/:id/edit' do
     maker_key = get_or_404(MakerKey, params.fetch('id').to_i)
-    maker_key_params = params.fetch('maker_key')
 
-    maker_key.name   = maker_key_params['name'] if maker_key_params.key? 'name'
-    maker_key.key    = maker_key_params['key']  if maker_key_params.key? 'key'
-    maker_key.active = to_bool(maker_key_params['active']) if maker_key_params.key? 'active'
+    maker_key_params = params.fetch('maker_key')
+    maker_key_params['active'] = to_bool(maker_key_params['active']) if maker_key_params.key? 'active'
+    maker_key.set(maker_key_params)
 
     if maker_key.valid?
       maker_key.save
