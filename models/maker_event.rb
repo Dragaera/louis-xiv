@@ -21,5 +21,5 @@ class MakerEvent < Sequel::Model
 
   alias_method :active?, :active
 
-  one_to_many :maker_actions
+  many_to_many :maker_actions
 end

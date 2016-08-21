@@ -1,34 +1,36 @@
 class MakerAction < Sequel::Model
   def self.active
-    # Todo: Better to do it all in DB, joining tables, filtering by all active columns
-    MakerAction.where(active: true).to_a.select { |action| action.is_active? }
+    MakerAction.where(active: true)
   end
 
   def self.inactive
-    # Todo: Better to do it all in DB, joining tables, filtering by all active columns
-    MakerAction.all.reject { |action| action.is_active? }
-  end
-
-  def before_validation
-    if (name.nil? || name.empty?) && maker_event && maker_key
-      self.name = "#{ maker_event.name } @ #{ maker_key.name }"
-    end
+    MakerAction.where(active: false)
   end
 
   plugin :validation_helpers
 
   def validate
-    validates_presence [:maker_event_id, :maker_key_id, :name]
-
-    validates_unique [:maker_event_id, :maker_key_id]
+    validates_presence [:name]
   end
 
   alias_method :active?, :active
 
-  many_to_one :maker_event
-  many_to_one :maker_key
+  many_to_many :maker_events
+  many_to_many :maker_keys
 
-  def is_active?
-    active && maker_key.active && maker_event.active
+  def active_maker_keys
+    maker_keys_dataset.where(active: true).to_a
+  end
+
+  def inactive_maker_keys
+    maker_keys_dataset.where(active: false).to_a
+  end
+
+  def active_maker_events
+    maker_events_dataset.where(active: true).to_a
+  end
+
+  def inactive_maker_events
+    maker_events_dataset.where(active: false).to_a
   end
 end

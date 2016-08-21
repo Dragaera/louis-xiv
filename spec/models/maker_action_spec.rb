@@ -1,75 +1,71 @@
 require 'spec_helper'
 
 RSpec.describe MakerAction do
+  let(:key_1) { MakerKey.create(key: 'key1', active: true) }
+  let(:key_2) { MakerKey.create(key: 'key2', active: false) }
+
+  let(:event_1) { MakerEvent.create(event: 'event1', active: true) }
+  let(:event_2) { MakerEvent.create(event: 'event2', active: false) }
+
+  let(:action_1) { MakerAction.create(name: 'Test action 1') }
+  let(:action_2) { MakerAction.create(name: 'Test action 2', active: false) }
+
   before(:each) do
-    @key1 = MakerKey.create(key: 'key1', active: true)
-    @key2 = MakerKey.create(key: 'key2', active: false)
-    @key3 = MakerKey.create(key: 'key3', active: true)
+    action_1.add_maker_key(key_1)
+    action_1.add_maker_event(event_1)
 
-    @event1 = MakerEvent.create(event: 'event1', active: true)
-    @event2 = MakerEvent.create(event: 'event2', active: false)
-
-    @action1 = MakerAction.create(maker_key_id: @key1.id, maker_event_id: @event1.id)
-
-    @action2 = MakerAction.create(maker_key_id: @key1.id, maker_event_id: @event2.id)
-    @action3 = MakerAction.create(maker_key_id: @key2.id, maker_event_id: @event1.id)
-
-    @action4 = MakerAction.create(maker_key_id: @key3.id, maker_event_id: @event1.id, active: false)
+    action_2.add_maker_key(key_1)
+    action_2.add_maker_key(key_2)
+    action_2.add_maker_event(event_1)
+    action_2.add_maker_event(event_2)
   end
 
   describe '#save' do
     it 'should set the default value of #active' do
-      expect(@action1).to be_active
-    end
-
-    it 'should set the default value of #name' do
-      expect(@action1.name).to eq "#{ @event1.event } @ #{ @key1.key }"
+      expect(action_1).to be_active
     end
   end
 
   describe '#valid?' do
-    it 'should validate presence of #maker_event' do
-      action = MakerAction.new(maker_key_id: @key2.id)
+    it 'should validate presence of #name' do
+      action = MakerAction.new(active: true)
       expect(action).to_not be_valid
-
-      action.maker_event_id = @event2.id
-      expect(action).to be_valid
-    end
-
-    it 'should validate presence of #maker_key' do
-      action = MakerAction.new(maker_event_id: @event2.id)
-      expect(action).to_not be_valid
-
-      action.maker_key_id = @key2.id
-      expect(action).to be_valid
-    end
-
-    it 'should validate uniqueness of [#maker_event, #maker_key]' do
-      action = MakerAction.new(maker_key_id: @key1.id, maker_event_id: @event2.id)
-      expect(action).to_not be_valid
-
-      action.maker_key_id = @key2.id
-      expect(action).to be_valid
     end
   end
 
+  describe '#active_maker_keys' do
+    it 'should return those which are active' do
+      expect(action_2.active_maker_keys).to match_array([key_1])
+    end
+  end
+
+  describe '#inactive_maker_keys' do
+    it 'should return those which are inactive' do
+      expect(action_2.inactive_maker_keys).to match_array([key_2])
+    end
+  end
+
+  describe '#active_maker_events' do
+    it 'should return those which are active' do
+      expect(action_2.active_maker_events).to match_array([event_1])
+    end
+  end
+
+  describe '#inactive_maker_events' do
+    it 'should return those which are inactive' do
+      expect(action_2.inactive_maker_events).to match_array([event_2])
+    end
+  end
+  
   describe '::active' do
-    it 'should return those which are active, including their keys and events' do
-      expect(MakerAction.active).to match_array([@action1])
+    it 'should return those which are active' do
+      expect(MakerAction.active).to match_array([action_1])
     end
   end
 
   describe '::inactive' do
     it 'should return those which are inactive' do
-      expect(MakerAction.inactive).to include(@action4)
-    end
-
-    it 'should return those with an inactive event' do
-      expect(MakerAction.inactive).to include(@action2)
-    end
-
-    it 'should return those with an inactive key' do
-      expect(MakerAction.inactive).to include(@action3)
+      expect(MakerAction.inactive).to match_array([action_2])
     end
   end
 
