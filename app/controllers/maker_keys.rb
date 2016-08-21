@@ -41,6 +41,15 @@ LouisXiv::App.controllers :maker_keys do
   post :edit, map: '/maker_keys/:id/edit' do
   end
 
-  delete :delete, map: '/maker_keys/:id' do
+  post :delete, map: '/maker_keys/:id/delete' do
+    maker_key = get_or_404(MakerKey, params.fetch('id').to_i)
+    
+    if maker_key.maker_actions.count > 0
+      error = "Cannot delete #{ maker_key.name }, it is used in #{ pluralize(maker_key.maker_actions.count, 'action') } (#{ maker_key.maker_actions.map(&:name).join(', ') })"
+      redirect(url(:maker_keys, :show, id: maker_key.id), error: error)
+    end
+
+    maker_key.destroy
+    redirect(url(:maker_keys, :index))
   end
 end
