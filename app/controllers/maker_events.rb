@@ -26,6 +26,8 @@ LouisXiv::App.controllers :maker_events do
   end
 
   get :show, map: '/maker_events/:id' do
+    @maker_event = get_or_404(MakerEvent, params.fetch('id').to_i)
+    render 'show'
   end
 
   get :edit, map: '/maker_events/:id/edit' do

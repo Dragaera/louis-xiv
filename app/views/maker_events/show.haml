@@ -1,0 +1,45 @@
+.page-header
+  %h1
+    Maker event
+    %small
+      = @maker_event.name
+
+    - if @maker_event.active
+      %span.label.label-success
+        Active
+    - else
+      %span.label.label-default
+        Inactive
+
+.row
+  .col-md-6
+    %a.btn.btn-primary{ href: url(:maker_events, :edit, id: @maker_event.id) }
+      Edit
+      %span.glyphicon.glyphicon-edit
+
+    = form_tag url(:maker_events, :delete, id: @maker_event.id), method: 'post', class: 'btn' do
+      = submit_tag 'Delete', class: 'btn btn-danger'
+
+.row
+  .col-md-6
+    %h2 Details
+    %table.table.table-bordered
+      %tbody
+        %tr
+          %td Event
+          %td= @maker_event.event
+        %tr
+          %td Used at
+          %td= pretty_print_date(@maker_event.used_at, ago: true, alt: '(never)')
+        %tr
+          %td Created at
+          %td= pretty_print_date(@maker_event.created_at, alt: '(never)')
+        %tr
+          %td Updated at
+          %td= pretty_print_date(@maker_event.updated_at, alt: '(never)')
+
+  .col-md-6
+    %h2 Used in actions
+    .list-group
+      - @maker_event.maker_actions.each do |action|
+        = 'TODO' # link_to(action.name, url(:maker_actions, :show, id: action.id), class: 'list-group-item')
