@@ -1,6 +1,8 @@
 .page-header
   %h1 
-    = "Maker key: #{ @maker_key.name }"
+    Maker key
+    %small
+      = @maker_key.name
 
     - if @maker_key.active
       %span.label.label-success

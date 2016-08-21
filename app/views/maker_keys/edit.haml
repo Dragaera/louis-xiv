@@ -1,4 +1,8 @@
-%h1 Edit #{ @maker_key.name }
+.page-header
+  %h1 
+    Edit 
+    %small= @maker_key.name
+
 .row
   .col-md-6
     = partial 'maker_keys/form', locals: { target_url: url(:maker_keys, :edit, id: @maker_key.id) , submit_caption: 'Edit', action: 'edit' }
