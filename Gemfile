@@ -20,7 +20,7 @@ gem 'rake'
 gem 'haml'
 gem 'sequel'
 
-gem 'padrino', '0.13.2'
+gem 'padrino', '0.13.3'
 
 group :test do
   gem 'rspec'
