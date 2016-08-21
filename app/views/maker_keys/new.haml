@@ -1,4 +1,4 @@
 %h1 Create Maker Key
 .row
   .col-md-6
-    = partial 'maker_keys/form'
+    = partial 'maker_keys/form', locals: { target_url: url(:maker_keys, :new) , submit_caption: 'Create', action: 'create' }

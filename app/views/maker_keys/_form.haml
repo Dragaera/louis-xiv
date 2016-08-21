@@ -1,6 +1,6 @@
-= form_for @maker_key, url(:maker_keys, :new) do |f|
+= form_for @maker_key, target_url do |f|
   - if flash[:form_error]
-    = partial 'form_errors', locals: { form_errors: flash[:form_error] }
+    = partial 'form_errors', locals: { form_errors: flash[:form_error], action: action }
 
   .form-group
     = f.label :name
@@ -15,4 +15,4 @@
       = f.check_box :active
       Active
 
-  = f.submit 'Create', class: 'btn btn-default'
+  = f.submit submit_caption, class: 'btn btn-default'
