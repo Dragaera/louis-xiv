@@ -6,7 +6,7 @@ LouisXiv::App.controllers :maker_events do
   end
 
   get :new do
-    @maker_event = session['maker_event'] || MakerEvent.new
+    @maker_event = session['maker_event'] || MakerEvent.new(active: true)
     session.delete 'maker_event'
 
     render 'new'

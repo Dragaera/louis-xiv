@@ -6,7 +6,7 @@ LouisXiv::App.controllers :maker_keys do
   end
 
   get :new do
-    @maker_key = session['maker_key'] || MakerKey.new
+    @maker_key = session['maker_key'] || MakerKey.new(active: true)
     session.delete 'maker_key'
 
     render 'new'
