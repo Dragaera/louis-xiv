@@ -34,3 +34,6 @@ class MakerAction < Sequel::Model
     maker_events_dataset.where(active: false).to_a
   end
 end
+
+# Allow sane deletion of actions by deleting all entries in many-to-many table.
+MakerAction.plugin :association_dependencies, maker_keys: :nullify, maker_events: :nullify
