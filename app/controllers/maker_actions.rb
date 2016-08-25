@@ -45,6 +45,8 @@ LouisXiv::App.controllers :maker_actions do
   end
 
   get :show, map: '/maker_actions/:id' do
+    @maker_action = get_or_404(MakerAction, params.fetch('id').to_i)
+    render 'show'
   end
 
   get :edit, map: '/maker_actions/:id/edit' do
