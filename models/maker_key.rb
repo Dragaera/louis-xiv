@@ -23,3 +23,5 @@ class MakerKey < Sequel::Model
 
   many_to_many :maker_actions
 end
+
+MakerKey.plugin :association_dependencies, maker_actions: :nullify

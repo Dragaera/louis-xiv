@@ -57,11 +57,6 @@ LouisXiv::App.controllers :maker_events do
   post :delete, map: '/maker_events/:id/delete' do
     maker_event = get_or_404(MakerEvent, params.fetch('id').to_i)
 
-    if maker_event.maker_actions.count > 0
-      error = "Cannot delete #{ maker_event.name }, it is used in #{ pluralize(maker_event.maker_actions.count, 'action') } (#{ maker_event.maker_actions.map(&:name).join(', ') })"
-      redirect(url(:maker_events, :show, id: maker_event.id), error: error)
-    end
-
     maker_event.destroy
     redirect(url(:maker_events, :index))
   end

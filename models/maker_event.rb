@@ -23,3 +23,5 @@ class MakerEvent < Sequel::Model
 
   many_to_many :maker_actions
 end
+
+MakerEvent.plugin :association_dependencies, maker_actions: :nullify
