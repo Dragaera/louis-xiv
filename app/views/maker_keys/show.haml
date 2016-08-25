@@ -41,4 +41,4 @@
     %h2 Used in actions
     .list-group
       - @maker_key.maker_actions.each do |action|
-        = 'TODO' # link_to(action.name, url(:maker_actions, :show, id: action.id) ,class: 'list-group-item')
+        = link_to(action.name, url(:maker_actions, :show, id: action.id) ,class: 'list-group-item')
