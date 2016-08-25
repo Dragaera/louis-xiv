@@ -19,7 +19,19 @@ module LouisXiv
           "#{ attr.capitalize }: #{ errors.map(&:capitalize).join(', ') }"
         end
       end
-    end
+
+      def to_int(values, strict: true)
+        out = []
+        values.each do |x|
+          begin
+            out << Integer(x)
+          rescue ArgumentError
+            raise if strict
+          end
+        end
+        out
+      end
+    end 
 
     helpers ApplicationHelper
   end
