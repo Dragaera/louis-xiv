@@ -56,6 +56,10 @@ LouisXiv::App.controllers :maker_actions do
   end
 
   post :delete, map: '/maker_actions/:id/delete' do
+    maker_action = get_or_404(MakerAction, params.fetch('id').to_i)
+
+    maker_action.destroy
+    redirect(url(:maker_actions, :index))
   end
 
 end
