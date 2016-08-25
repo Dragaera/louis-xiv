@@ -1,0 +1,25 @@
+.page-header
+  %h1
+    IFTT
+    %small Maker actions
+
+%a{ href: url(:maker_actions, :new) }
+  %span.glyphicon.glyphicon-plus
+
+%table.table
+  %thead
+    %tr
+      %th Action
+      %th Last used
+      %th Active
+
+  %tbody
+    - @maker_actions.each do |action|
+      %tr
+        %td= link_to "#{ action.name } (#{ pluralize(action.maker_keys.count, 'key') } / #{ pluralize(action.maker_events.count, 'event') })", url(:maker_actions, :show, id: action.id)
+        %td= pretty_print_date(action.used_at, ago: true, alt: '(never)')
+        %td
+          - if action.active
+            %span.glyphicon.glyphicon-ok
+          - else
+            %span.glyphicon.glyphicon-remove

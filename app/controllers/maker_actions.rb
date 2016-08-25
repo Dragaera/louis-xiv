@@ -1,6 +1,8 @@
 LouisXiv::App.controllers :maker_actions do
 
   get :index do
+    @maker_actions = MakerAction.all
+    render 'index'
   end
 
   get :new do
@@ -36,7 +38,7 @@ LouisXiv::App.controllers :maker_actions do
     else
       errors = pp_form_errors(maker_action.errors)
     end
-    
+
     # @Todo: Marshal
     session['maker_action'] = maker_action
     redirect(url(:maker_actions, :new), form_error: errors)
