@@ -1,0 +1,35 @@
+= form_for @maker_action, target_url do |f|
+  - if flash[:form_error]
+    = partial 'form_errors', locals: { form_errors: flash[:form_error], action: action }
+
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form_group
+    = f.label :maker_keys
+    %select.form-control.select2{ multiple: 'multiple', name: 'maker_action[maker_keys][]' }
+      - MakerKey.each do |key|
+        - if @maker_action.maker_keys.include? key
+          %option{ value: key.id, selected: 'selected' }= key.name
+        - else
+          %option{ value: key.id }= key.name
+
+  .form_group
+    = f.label :maker_events
+    %select.form-control.select2{ multiple: 'multiple', name: 'maker_action[maker_events][]' }
+      - MakerEvent.each do |event|
+        - if @maker_action.maker_events.include? event
+          %option{ value: event.id, selected: 'selected' }= event.name
+        - else
+          %option{ value: event.id }= event.name
+
+  .form_group
+    = f.label :maker_events
+
+  .checkbox
+    %label
+      = f.check_box :active
+      Active
+
+  = f.submit submit_caption, class: 'btn btn-default'

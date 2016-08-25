@@ -15,8 +15,9 @@ class MakerAction < Sequel::Model
 
   alias_method :active?, :active
 
-  many_to_many :maker_events
-  many_to_many :maker_keys
+  # Needed for AssociationPks plugin to work on new objects.
+  many_to_many :maker_events, delay_pks: true
+  many_to_many :maker_keys,   delay_pks: true
 
   def active_maker_keys
     maker_keys_dataset.where(active: true).to_a
