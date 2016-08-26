@@ -63,6 +63,41 @@ LouisXiv::App.controllers :maker_actions do
   end
 
   post :edit, map: '/maker_actions/:id/edit' do
+    maker_action = get_or_404(MakerAction, params.fetch('id').to_i)
+
+    obj_params = params.fetch('maker_action')
+    maker_action.set(
+      name: obj_params.fetch('name'), 
+      active: to_bool(obj_params.fetch('active', false))
+    )
+
+    maker_key_ids   = to_int(obj_params.fetch('maker_keys', []), strict: false)
+    maker_event_ids = to_int(obj_params.fetch('maker_events', []), strict: false)
+
+    errors = []
+
+    begin
+      Sequel::Model::db.transaction do
+        maker_action.maker_key_pks   = maker_key_ids
+        maker_action.maker_event_pks = maker_event_ids
+
+        if maker_action.valid?
+          maker_action.save
+          redirect(url(:maker_actions, :show, id: maker_action.id), success: "Modified '#{ maker_action.name }'")
+        end
+
+        # Action not valid due to missing name etc
+        errors += pp_form_errors(maker_action.errors)
+      end
+    rescue Sequel::DatabaseError
+      # @Todo: Logging
+      # Saving action failed because of non-existant key or event
+      errors += ["Could not modify #{ maker_action.name }"]
+    end
+
+    # @Todo: Marshal
+    session['maker_action'] = maker_action
+    redirect(url(:maker_actions, :edit, id: maker_action.id), form_error: errors)
   end
 
   post :delete, map: '/maker_actions/:id/delete' do
