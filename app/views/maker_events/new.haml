@@ -5,4 +5,4 @@
 
 .row
   .col-md-6
-    = partial 'maker_events/form', locals: { target_url: url(:maker_events, :new), submit_caption: 'Create', action: 'create' }
+    = partial 'maker_events/form', locals: { type: :new, target_url: url(:maker_events, :new) }

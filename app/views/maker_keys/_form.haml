@@ -1,6 +1,15 @@
+- if type == :new
+  - back_link = url(:maker_keys, :index)
+  - action = 'create'
+  - submit_caption = 'Create'
+- elsif type == :edit
+  - back_link = url(:maker_keys, :show, id: @maker_key.id)
+  - action = 'edit'
+  - submit_caption = 'Edit'
+
 = form_for @maker_key, target_url do |f|
   - if flash[:form_error]
-    = partial 'form_errors', locals: { form_errors: flash[:form_error], action: action }
+    = partial 'form_errors', locals: { form_errors: flash[:form_error], action: action  }
 
   .form-group
     = f.label :name
@@ -16,3 +25,5 @@
       Active
 
   = f.submit submit_caption, class: 'btn btn-default'
+
+  = link_to 'Cancel', back_link, class: 'btn btn-link'

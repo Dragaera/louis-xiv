@@ -1,3 +1,12 @@
+- if type == :new
+  - back_link = url(:maker_actions, :index)
+  - action = 'create'
+  - submit_caption = 'Create'
+- elsif type == :edit
+  - back_link = url(:maker_actions, :show, id: @maker_action.id)
+  - action = 'edit'
+  - submit_caption = 'Edit'
+
 = form_for @maker_action, target_url do |f|
   - if flash[:form_error]
     = partial 'form_errors', locals: { form_errors: flash[:form_error], action: action }
@@ -29,4 +38,6 @@
       = f.check_box :active
       Active
 
-  = f.submit submit_caption, class: 'btn btn-default'
+  = f.submit submit_caption, class: 'btn btn-primary'
+
+  = link_to 'Cancel', back_link, class: 'btn btn-link'
