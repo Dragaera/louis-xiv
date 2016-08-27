@@ -10,6 +10,10 @@ FactoryGirl.define do
   end
 
   factory :maker_event do
-    event "Test event"
+    event 'Test event'
+  end
+
+  factory :maker_key do
+    key 'Test key'
   end
 end

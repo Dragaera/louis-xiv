@@ -1,56 +1,52 @@
 require 'spec_helper'
 
 RSpec.describe MakerKey do
-  before(:each) do
-    @key1 = MakerKey.create(key: 'key1', active: true)
-    @key2 = MakerKey.create(key: 'key2', active: true)
-    @key3 = MakerKey.create(key: 'key3', active: false)
-    @key4 = MakerKey.create(key: 'key4', active: false)
-  end
+  let(:key_foo) { create(:maker_key, key: 'foo') }
+  let(:key_bar) { create(:maker_key, key: 'bar') }
+  let(:key_baz) { create(:maker_key, :inactive, key: 'baz') }
+  let(:key_bak) { create(:maker_key, :inactive, key: 'bak') }
 
   describe '#save' do
     it 'should set the default value of #active' do
-      key = MakerKey.create(key: 'asdf')
-      expect(key).to be_active
+      expect(key_foo).to be_active
     end
 
     it 'should set the default value of #name' do
-      key = MakerKey.create(key: 'asdf')
-      expect(key.name).to eq key.key
+      expect(key_foo.name).to eq 'foo'
     end
   end
 
   describe '#valid?' do
     it 'should validate presence of #key' do
-      key = MakerKey.new()
+      key = build(:maker_key, :active, key: nil)
       expect(key).to_not be_valid
 
-      key = MakerKey.new(active: false)
+      key = build(:maker_key, :inactive, key: nil)
       expect(key).to_not be_valid
 
-      key = MakerKey.new(key: 'asdf')
+      key = build(:maker_key, :active)
       expect(key).to be_valid
     end
 
     it 'should validate uniqueness of #key' do
-      MakerKey.create(key: 'asdf')
-
-      key = MakerKey.new(key: 'asdf')
+      key_foo # lazily loaded by #let
+      key = build(:maker_key, key: 'foo')
       expect(key).to_not be_valid
-      key.key = '1234'
+
+      key.key = 'foobar'
       expect(key).to be_valid
     end
   end
 
   describe '::active' do
     it 'should return active keys' do
-      expect(MakerKey.active).to match_array([@key1, @key2])
+      expect(MakerKey.active).to match_array([key_foo, key_bar])
     end
   end
 
   describe '::inactive' do
     it 'should return inactive keys' do
-      expect(MakerKey.inactive).to match_array([@key3, @key4])
+      expect(MakerKey.inactive).to match_array([key_baz, key_bak])
     end
   end
 end
