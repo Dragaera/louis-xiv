@@ -4,11 +4,14 @@ Dir[File.expand_path(File.dirname(__FILE__) + "/../app/helpers/**/*.rb")].each(&
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
+  conf.include FactoryGirl::Syntax::Methods
 
   conf.before(:suite) do
+    FactoryGirl.find_definitions
+
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
-  end 
+  end
 
   conf.around(:each) do |spec|
     DatabaseCleaner.cleaning do

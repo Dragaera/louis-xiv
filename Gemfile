@@ -26,6 +26,7 @@ group :test do
   gem 'rspec'
   gem 'rack-test', :require => 'rack/test'
   gem 'database_cleaner'
+  gem 'factory_girl'
 end
 
 group :development do
