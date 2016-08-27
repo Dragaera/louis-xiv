@@ -18,7 +18,7 @@ FactoryGirl.define do
   end
 
   factory :maker_action do
-    name 'Test action'
+    sequence(:name) { |i| "Maker Action #{ i }" }
 
     trait :with_maker_keys do
       transient do
@@ -59,6 +59,28 @@ FactoryGirl.define do
         end
 
         action.save
+      end
+    end
+  end
+
+  factory :solar_log_trigger do
+    sequence(:name) { |i| "SolarLog Trigger #{ i }" }
+    condition 'false'
+
+    trait :with_maker_actions do
+      transient do
+        maker_actions_count 1
+        inactive_maker_actions_count 0
+      end
+
+      after(:create) do |trigger, evaluator|
+        evaluator.maker_actions_count.times do
+          trigger.add_maker_action create(:maker_action, :active)
+        end
+
+        evaluator.inactive_maker_actions_count.times do
+          trigger.add_maker_action create(:maker_action, :inactive)
+        end
       end
     end
   end
