@@ -1,71 +1,74 @@
 require 'spec_helper'
 
 RSpec.describe MakerAction do
-  let(:key_1) { MakerKey.create(key: 'key1', active: true) }
-  let(:key_2) { MakerKey.create(key: 'key2', active: false) }
+  let(:action_simple) { create(:maker_action, 
+                               :with_maker_keys, :with_maker_events,
+                               maker_keys_count: 1, maker_events_count: 1,
+                               name: 'Simple action') }
 
-  let(:event_1) { MakerEvent.create(event: 'event1', active: true) }
-  let(:event_2) { MakerEvent.create(event: 'event2', active: false) }
-
-  let(:action_1) { MakerAction.create(name: 'Test action 1') }
-  let(:action_2) { MakerAction.create(name: 'Test action 2', active: false) }
-
-  before(:each) do
-    action_1.add_maker_key(key_1)
-    action_1.add_maker_event(event_1)
-
-    action_2.add_maker_key(key_1)
-    action_2.add_maker_key(key_2)
-    action_2.add_maker_event(event_1)
-    action_2.add_maker_event(event_2)
-  end
+  let(:action_complex) { create(:maker_action,
+                                :inactive,
+                                :with_maker_keys, :with_maker_events,
+                                maker_keys_count: 1, inactive_maker_keys_count: 1,
+                                maker_events_count: 1, inactive_maker_events_count: 1,
+                                name: 'Complex action') }
 
   describe '#save' do
     it 'should set the default value of #active' do
-      expect(action_1).to be_active
+      expect(action_simple).to be_active
     end
   end
 
   describe '#valid?' do
     it 'should validate presence of #name' do
-      action = MakerAction.new(active: true)
+      action = build(:maker_action, :active, name: nil)
       expect(action).to_not be_valid
+
+      action = build(:maker_action, :inactive, name: nil)
+      expect(action).to_not be_valid
+
+      action = build(:maker_action, :inactive, name: 'Test action')
+      expect(action).to be_valid
     end
   end
 
   describe '#active_maker_keys' do
     it 'should return those which are active' do
-      expect(action_2.active_maker_keys).to match_array([key_1])
+      active_keys = action_complex.maker_keys_dataset.where(active: true)
+      expect(action_complex.active_maker_keys).to match_array(active_keys)
     end
   end
 
   describe '#inactive_maker_keys' do
     it 'should return those which are inactive' do
-      expect(action_2.inactive_maker_keys).to match_array([key_2])
+      inactive_keys = action_complex.maker_keys_dataset.where(active: false)
+      expect(action_complex.inactive_maker_keys).to match_array(inactive_keys)
     end
   end
 
   describe '#active_maker_events' do
     it 'should return those which are active' do
-      expect(action_2.active_maker_events).to match_array([event_1])
+      active_events = action_complex.maker_events_dataset.where(active: true)
+      expect(action_complex.active_maker_events).to match_array(active_events)
     end
   end
 
   describe '#inactive_maker_events' do
     it 'should return those which are inactive' do
-      expect(action_2.inactive_maker_events).to match_array([event_2])
+      inactive_events = action_complex.maker_events_dataset.where(active: false)
+      expect(action_complex.inactive_maker_events).to match_array(inactive_events)
     end
   end
-  
+
   describe '::active' do
     it 'should return those which are active' do
-      expect(MakerAction.active).to match_array([action_1])
+      expect(MakerAction.active).to match_array([action_simple])
     end
   end
 
   describe '::inactive' do
     it 'should return those which are inactive' do
-      expect(MakerAction.inactive).to match_array([action_2])
+      expect(MakerAction.inactive).to match_array([action_complex])
     end
   end
 
