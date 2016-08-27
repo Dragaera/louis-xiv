@@ -16,8 +16,9 @@ class MakerAction < Sequel::Model
   alias_method :active?, :active
 
   # Needed for AssociationPks plugin to work on new objects.
-  many_to_many :maker_events, delay_pks: true
-  many_to_many :maker_keys,   delay_pks: true
+  many_to_many :maker_events,       delay_pks: true
+  many_to_many :maker_keys,         delay_pks: true
+  many_to_many :solar_log_triggers, delay_pks: true, join_table: :solar_log_triggers_actions
 
   def active_maker_keys
     maker_keys_dataset.where(active: true).to_a
