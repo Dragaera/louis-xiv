@@ -1,7 +1,7 @@
 LouisXiv::App.controllers :maker_actions do
 
   get :index do
-    @maker_actions = MakerAction.all
+    @maker_actions = MakerAction.order(:name)
     render 'index'
   end
 

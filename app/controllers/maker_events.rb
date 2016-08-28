@@ -1,7 +1,7 @@
 LouisXiv::App.controllers :maker_events do
 
   get :index do
-    @maker_events = MakerEvent.all
+    @maker_events = MakerEvent.order(:name)
     render 'index'
   end
 

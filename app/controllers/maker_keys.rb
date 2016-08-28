@@ -1,7 +1,7 @@
 LouisXiv::App.controllers :maker_keys do
 
   get :index do
-    @maker_keys = MakerKey.all
+    @maker_keys = MakerKey.order(:name)
     render 'index'
   end
 
