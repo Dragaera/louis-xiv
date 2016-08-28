@@ -26,6 +26,8 @@
         #navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav
             %li
+              = link_to 'SolarLog Triggers', url(:solar_log_triggers, :index)
+            %li
               = link_to 'Maker Keys', url(:maker_keys, :index)
             %li
               = link_to 'Maker Events', url(:maker_events, :index)
