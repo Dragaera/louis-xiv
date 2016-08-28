@@ -9,6 +9,7 @@ Sequel.migration do
       DateTime :created_at
       DateTime :updated_at
       DateTime :used_at
+      DateTime :checked_at
     end
 
     create_table :solar_log_triggers_actions do
