@@ -21,12 +21,14 @@ LouisXiv::App.controllers :solar_log_triggers do
     )
 
     maker_action_ids = to_int(obj_params.fetch('maker_actions', []), strict: false)
+    solar_log_station_ids = to_int(obj_params.fetch('solar_log_stations', []), strict: false)
 
     errors = []
 
     begin
       Sequel::Model::db.transaction do
         solar_log_trigger.maker_action_pks = maker_action_ids
+        solar_log_trigger.solar_log_station_pks = solar_log_station_ids
 
         if solar_log_trigger.valid?
           solar_log_trigger.save
@@ -70,12 +72,14 @@ LouisXiv::App.controllers :solar_log_triggers do
     )
 
     maker_action_ids = to_int(obj_params.fetch('maker_actions', []), strict: false)
+    solar_log_station_ids = to_int(obj_params.fetch('solar_log_stations', []), strict: false)
 
     errors = []
 
     begin
       Sequel::Model::db.transaction do
         solar_log_trigger.maker_action_pks = maker_action_ids
+        solar_log_trigger.solar_log_station_pks = solar_log_station_ids
 
         if solar_log_trigger.valid?
           solar_log_trigger.save

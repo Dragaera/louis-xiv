@@ -28,6 +28,15 @@
         - else
           %option{ value: action.id }= action.name
 
+  .form-group
+    = f.label :solar_log_stations
+    %select.form-control.select2{ multiple: 'multiple', name: 'solar_log_trigger[solar_log_stations][]' }
+      - SolarLogStation.order(:name).each do |station|
+        - if @solar_log_trigger.solar_log_station_pks.include? station.id
+          %option{ value: station.id, selected: 'selected' }= station.name
+        - else
+          %option{ value: station.id }= station.name
+
   .checkbox
     %label
       = f.check_box :active
