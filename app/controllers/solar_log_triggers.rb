@@ -48,7 +48,8 @@ LouisXiv::App.controllers :solar_log_triggers do
   end
 
   get :show, map: '/solar_log_triggers/:id' do
-
+    @solar_log_trigger = get_or_404(SolarLogTrigger, params.fetch('id').to_i)
+    render 'show'
   end
 
   get :edit, map: '/solar_log_triggers/:id/edit' do

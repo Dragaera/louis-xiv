@@ -1,0 +1,49 @@
+.page-header
+  %h1
+    SolarLog trigger
+    %small
+      = @solar_log_trigger.name
+
+    - if @solar_log_trigger.active
+      %span.label.label-success
+        Active
+    - else
+      %span.label.label-default
+        Inactive
+
+.row
+  .col-md-6
+    %a.btn.btn-primary{ href: url(:solar_log_triggers, :edit, id: @solar_log_trigger.id) }
+      Edit
+      %span.glyphicon.glyphicon-edit
+
+    = form_tag url(:solar_log_triggers, :delete, id: @solar_log_trigger.id), method: 'post', class: 'btn' do
+      = submit_tag 'Delete', class: 'btn btn-danger'
+
+.row
+  .col-md-6
+    %h2 Details
+    %table.table.table-bordered
+      %tbody
+        %tr
+          %td Checked at
+          %td= pretty_print_date(@solar_log_trigger.checked_at, ago: true, alt: '(never)')
+        %tr
+          %td Used at
+          %td= pretty_print_date(@solar_log_trigger.used_at, ago: true, alt: '(never)')
+        %tr
+          %td Created at
+          %td= pretty_print_date(@solar_log_trigger.created_at, alt: '(never)')
+        %tr
+          %td Updated at
+          %td= pretty_print_date(@solar_log_trigger.updated_at, alt: '(never)')
+
+  .col-md-6
+
+.row
+  %h2 Uses
+  .col-md-6
+    %h3 Maker actions
+    .list-group
+      - @solar_log_trigger.maker_actions.each do |action|
+        = link_to(action.name, url(:maker_actions, :show, id: action.id), class: 'list-group-item')
