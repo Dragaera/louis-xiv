@@ -13,7 +13,8 @@ class SolarLogTrigger < Sequel::Model
     validates_presence [:name, :condition]
   end
 
-  many_to_many :maker_actions, delay_pks: true, join_table: :solar_log_triggers_actions
+  many_to_many :maker_actions,      delay_pks: true, join_table: :solar_log_triggers_actions
+  many_to_many :solar_log_stations, delay_pks: true
 
   def active_maker_actions
     maker_actions_dataset.where(active: true)
@@ -25,4 +26,4 @@ class SolarLogTrigger < Sequel::Model
 end
 
 # Allow sane deletion of triggers by deleting all entries in many-to-many table.
-SolarLogTrigger.plugin :association_dependencies, maker_actions: :nullify
+SolarLogTrigger.plugin :association_dependencies, maker_actions: :nullify, solar_log_stations: :nullify
