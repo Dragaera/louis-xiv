@@ -1,0 +1,47 @@
+.page-header
+  %h1
+    SolarLog station
+    %small
+      = @solar_log_station.name
+
+    - if @solar_log_station.active
+      %span.label.label-success
+        Active
+    - else
+      %span.label.label-default
+        Inactive
+
+.row
+  .col-md-6
+    %a.btn.btn-primary{ href: url(:solar_log_stations, :edit, id: @solar_log_station.id) }
+      Edit
+      %span.glyphicon.glyphicon-edit
+
+    = form_tag url(:solar_log_stations, :delete, id: @solar_log_station.id), method: 'post', class: 'btn' do
+      = submit_tag 'Delete', class: 'btn btn-danger'
+
+  .col-md-6
+
+.row
+  .col-md-6
+    %h2 Details
+    %table.table.table-bordered
+      %tbody
+        %tr
+          %td HTTP URL
+          %td= link_to @solar_log_station.http_url, @solar_log_station.http_url
+        %tr
+          %td Checked at
+          %td= pretty_print_date(@solar_log_station.checked_at, ago: true, alt: '(never)')
+        %tr
+          %td Created at
+          %td= pretty_print_date(@solar_log_station.created_at, alt: '(never)')
+        %tr
+          %td Updated at
+          %td= pretty_print_date(@solar_log_station.updated_at, alt: '(never)')
+
+  .col-md-6
+    %h2 Used by triggers
+    .list-group
+      - @solar_log_station.solar_log_triggers.each do |trigger|
+        = link_to(trigger.name, url(:solar_log_triggers, :show, id: trigger.id), class: 'list-group-item')
