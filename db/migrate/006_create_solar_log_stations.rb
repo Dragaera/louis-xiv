@@ -5,6 +5,7 @@ Sequel.migration do
 
       Bool     :active,     null: false, default: true
       String   :name,       null: false
+      String   :http_url,   null: false
       DateTime :checked_at
       DateTime :created_at
       DateTime :updated_at

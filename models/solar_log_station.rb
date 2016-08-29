@@ -10,7 +10,7 @@ class SolarLogStation < Sequel::Model
   plugin :validation_helpers
 
   def validate
-    validates_presence [:name]
+    validates_presence [:name, :http_url]
   end
 
   many_to_many :solar_log_triggers, delay_pks: true
