@@ -17,7 +17,7 @@
   %tbody
     - @solar_log_triggers.each do |trigger|
       %tr
-        %td= link_to "#{ trigger.name } (#{ pluralize(trigger.maker_actions.count, 'action') })", url(:solar_log_triggers, :show, id: trigger.id)
+        %td= link_to "#{ trigger.name } (#{ pluralize(trigger.maker_actions.count, 'action') } / #{ pluralize(trigger.solar_log_stations.count, 'station') })", url(:solar_log_triggers, :show, id: trigger.id)
         %td= pretty_print_date(trigger.checked_at, ago: true, alt: '(never)')
         %td= pretty_print_date(trigger.used_at, ago: true, alt: '(never)')
         %td
