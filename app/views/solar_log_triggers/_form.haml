@@ -13,11 +13,11 @@
 
   .form-group
     = f.label :name
-    = f.text_field :name, class: 'form-control'
+    = f.text_field :name, class: 'form-control', required: true
 
   .form-group
     = f.label :condition
-    = f.text_area :condition, class: 'form-control'
+    = f.text_area :condition, class: 'form-control', required: true
 
   .form-group
     = f.label :maker_actions

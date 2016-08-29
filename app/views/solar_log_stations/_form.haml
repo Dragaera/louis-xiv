@@ -13,11 +13,11 @@
 
   .form-group
     = f.label :name
-    = f.text_field :name, class: 'form-control'
+    = f.text_field :name, class: 'form-control', required: true
 
   .form-group
     = f.label :http_url, caption: 'HTTP URL'
-    = f.url_field :http_url, class: 'form-control'
+    = f.url_field :http_url, class: 'form-control', required: true
 
   .checkbox
     %label
