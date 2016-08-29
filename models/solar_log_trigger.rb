@@ -24,3 +24,5 @@ class SolarLogTrigger < Sequel::Model
   end
 end
 
+# Allow sane deletion of triggers by deleting all entries in many-to-many table.
+SolarLogTrigger.plugin :association_dependencies, maker_actions: :nullify

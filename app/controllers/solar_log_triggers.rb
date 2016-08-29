@@ -96,7 +96,10 @@ LouisXiv::App.controllers :solar_log_triggers do
   end
 
   post :delete, map: '/solar_log_triggers/:id/delete' do
+    solar_log_trigger = get_or_404(SolarLogTrigger, params.fetch('id').to_i)
 
+    solar_log_trigger.destroy
+    redirect(url(:solar_log_triggers, :index))
   end
 
 end
