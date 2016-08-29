@@ -63,6 +63,10 @@ LouisXiv::App.controllers :solar_log_stations do
   end
 
   post :delete, map: '/solar_log_stations/:id/delete' do
+    solar_log_station = get_or_404(SolarLogStation, params.fetch('id').to_i)
+
+    solar_log_station.destroy
+    redirect(url(:solar_log_stations, :index))
   end
 
 end
