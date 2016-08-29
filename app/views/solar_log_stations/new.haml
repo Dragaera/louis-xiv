@@ -1,0 +1,8 @@
+.page-header
+  %h1
+    Create
+    %small SolarLog Station
+
+.row
+  .col-md-6
+    = partial 'solar_log_stations/form', locals: { type: :new, target_url: url(:solar_log_stations, :new) }

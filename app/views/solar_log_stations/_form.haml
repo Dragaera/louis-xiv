@@ -1,0 +1,29 @@
+- if type == :new
+  - back_link = url(:solar_log_stations, :index)
+  - action = 'create'
+  - submit_caption = 'Create'
+- elsif type == :edit
+  - back_link = url(:solar_log_stations, :edit, id: @solar_log_station.id)
+  - action = 'edit'
+  - submit_caption = 'Edit'
+
+= form_for @solar_log_station, target_url do |f|
+  - if flash[:form_error]
+    = partial 'form_errors', locals: { form_errors: flash[:form_error], action: action }
+
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :http_url, caption: 'HTTP URL'
+    = f.url_field :http_url, class: 'form-control'
+
+  .checkbox
+    %label
+      = f.check_box :active
+      Active
+
+  = f.submit submit_caption, class: 'btn btn-primary'
+
+  = link_to 'Cancel', back_link, class: 'btn btn-link'

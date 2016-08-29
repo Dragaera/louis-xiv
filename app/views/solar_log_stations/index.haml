@@ -1,0 +1,26 @@
+.page-header
+  %h1
+    SolarLog
+    %small Stations
+
+%a{ href: url(:solar_log_stations, :new) }
+  %span.glyphicon.glyphicon-plus
+
+%table.table
+  %thead
+    %tr
+      %th Station
+      %th Last checked
+      %th Active
+
+  %tbody
+    - @solar_log_stations.each do |station|
+      %tr
+        %td= link_to "#{ station.name } (#{ truncate(station.http_url, length: 30) })", url(:solar_log_stations, :show, id: station.id)
+        %td= pretty_print_date(station.checked_at, ago: true, alt: '(never)')
+        %td
+          - if station.active
+            %span.glyphicon.glyphicon-ok
+          - else
+            %span.glyphicon.glyphicon-remove
+
