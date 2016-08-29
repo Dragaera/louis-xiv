@@ -39,6 +39,11 @@
           %td= pretty_print_date(@solar_log_trigger.updated_at, alt: '(never)')
 
   .col-md-6
+    %h2 Condition
+    .panel.panel-default
+      .panel-body
+        = @solar_log_trigger.condition
+
 
 .row
   %h2 Uses
