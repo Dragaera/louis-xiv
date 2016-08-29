@@ -31,31 +31,31 @@
           %ul.nav.navbar-nav
             %li.dropdown
               %a.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', role: 'button' }
-                SolarLog 
+                SolarLog
                 %span.caret
-                %ul.dropdown-menu
-                  %li
-                    = link_to 'Stations', url(:solar_log_stations, :index)
-                  %li
-                    = link_to 'Triggers', url(:solar_log_triggers, :index)
+              %ul.dropdown-menu
+                %li
+                  = link_to 'Stations', url(:solar_log_stations, :index)
+                %li
+                  = link_to 'Triggers', url(:solar_log_triggers, :index)
 
             %li.dropdown
               %a.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', role: 'button' }
                 Actions
                 %span.caret
-                %ul.dropdown-menu
-                  %li
-                    = link_to 'IFTTT Maker Actions', url(:maker_actions, :index)
+              %ul.dropdown-menu
+                %li
+                  = link_to 'IFTTT Maker Actions', url(:maker_actions, :index)
 
             %li.dropdown
               %a.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', role: 'button' }
                 IFTTT Maker
                 %span.caret
-                %ul.dropdown-menu
-                  %li
-                    = link_to 'Events', url(:maker_events, :index)
-                  %li
-                    = link_to 'Keys', url(:maker_keys, :index)
+              %ul.dropdown-menu
+                %li
+                  = link_to 'Events', url(:maker_events, :index)
+                %li
+                  = link_to 'Keys', url(:maker_keys, :index)
 
     .container
       .flash
