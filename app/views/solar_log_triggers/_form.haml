@@ -22,7 +22,7 @@
   .form-group
     = f.label :maker_actions
     %select.form-control.select2{ multiple: 'multiple', name: 'solar_log_trigger[maker_actions][]' }
-      - MakerAction.each do |action|
+      - MakerAction.order(:name).each do |action|
         - if @solar_log_trigger.maker_action_pks.include? action.id
           %option{ value: action.id, selected: 'selected' }= action.name
         - else

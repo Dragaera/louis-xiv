@@ -18,7 +18,7 @@
   .form_group
     = f.label :maker_keys
     %select.form-control.select2{ multiple: 'multiple', name: 'maker_action[maker_keys][]' }
-      - MakerKey.each do |key|
+      - MakerKey.order(:name).each do |key|
         - if @maker_action.maker_key_pks.include? key.id
           %option{ value: key.id, selected: 'selected' }= key.name
         - else
@@ -27,7 +27,7 @@
   .form_group
     = f.label :maker_events
     %select.form-control.select2{ multiple: 'multiple', name: 'maker_action[maker_events][]' }
-      - MakerEvent.each do |event|
+      - MakerEvent.order(:name).each do |event|
         - if @maker_action.maker_event_pks.include? event.id
           %option{ value: event.id, selected: 'selected' }= event.name
         - else
