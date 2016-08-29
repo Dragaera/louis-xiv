@@ -83,5 +83,27 @@ FactoryGirl.define do
         end
       end
     end
+
+    trait :with_solar_log_stations do
+      transient do
+        solar_log_stations_count 1
+        inactive_solar_log_stations_count 1
+      end
+
+      after(:create) do |trigger, evaluator|
+        evaluator.solar_log_stations_count.times do
+          trigger.add_solar_log_station create(:solar_log_station, :active)
+        end
+
+        evaluator.inactive_solar_log_stations_count.times do
+          trigger.add_solar_log_station create(:solar_log_station, :inactive)
+        end
+      end
+    end
+
+  end
+
+  factory :solar_log_station do
+    sequence(:name) { |i| "SolarLog Station #{ i }" }
   end
 end
