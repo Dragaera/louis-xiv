@@ -52,11 +52,47 @@ LouisXiv::App.controllers :solar_log_triggers do
   end
 
   get :edit, map: '/solar_log_triggers/:id/edit' do
+    @solar_log_trigger = session['solar_log_trigger'] || get_or_404(SolarLogTrigger, params.fetch('id').to_i)
+    session.delete 'solar_log_trigger'
 
+    render 'edit'
   end
 
   post :edit, map: '/solar_log_triggers/:id/edit' do
+    solar_log_trigger = get_or_404(SolarLogTrigger, params.fetch('id').to_i)
 
+    obj_params = params.fetch('solar_log_trigger')
+    solar_log_trigger.set(
+      name: obj_params.fetch('name'),
+      condition: obj_params.fetch('condition'),
+      active: to_bool(obj_params.fetch('active', false))
+    )
+
+    maker_action_ids = to_int(obj_params.fetch('maker_actions', []), strict: false)
+
+    errors = []
+
+    begin
+      Sequel::Model::db.transaction do
+        solar_log_trigger.maker_action_pks = maker_action_ids
+
+        if solar_log_trigger.valid?
+          solar_log_trigger.save
+          redirect(url(:solar_log_triggers, :show, id: solar_log_trigger.id), success: "Modified '#{ solar_log_trigger.name }'")
+        end
+
+        # Trigger invalid (missing fields)
+        errors += pp_form_errors(solar_log_trigger.errors)
+      end
+    rescue Sequel::DatabaseError
+      # @Todo: Logging
+      # Saving trigger failed (e.g. ref integrity maker action fk)
+      errors += ["Could not modify '#{ solar_log_trigger.name }'"]
+    end
+
+    # @Todo: Marshal
+    session['solar_log_trigger'] = solar_log_trigger
+    redirect(url(:solar_log_triggers, :edit, id: solar_log_trigger.id), form_error: errors)
   end
 
   post :delete, map: '/solar_log_triggers/:id/delete' do
