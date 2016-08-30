@@ -22,6 +22,10 @@ gem 'sequel'
 
 gem 'padrino', '0.13.3'
 
+gem 'resque'
+
+gem 'sunscout'
+
 group :test do
   gem 'rspec'
   gem 'rack-test', :require => 'rack/test'
