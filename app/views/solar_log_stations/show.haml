@@ -50,7 +50,7 @@
 
 %h2 
   Metrics
-  %small= "Data from: #{ pretty_print_date(data_point.time, alt: '(never)') }"
+  %small= "Data from: #{ pretty_print_date(data_point.timestamp, alt: '(never)') }"
 
 .row
   .col-md-3
@@ -73,7 +73,7 @@
           %td= pp_si(data_point.consumption_ac, 'W')
         %tr
           %th{ scope: 'row' } Peak Capacity
-          %td= pp_si(data_point.power_total, 'W')
+          %td= pp_si(data_point.power_max, 'W')
 
 .row
   .col-md-12
@@ -88,25 +88,25 @@
         %tr
           %th{ scope: 'row' } Day
           %td= pp_si(data_point.consumption_day, 'Wh')
-          %td= pp_si(data_point.yield_day, 'Wh')
-          %td= pp_si(data_point.yield_day - data_point.consumption_day, 'Wh')
+          %td= pp_si(data_point.production_day, 'Wh')
+          %td= pp_si(data_point.production_day - data_point.consumption_day, 'Wh')
         %tr
           %th{ scope: 'row' } Yesterday
           %td= pp_si(data_point.consumption_yesterday, 'Wh')
-          %td= pp_si(data_point.yield_yesterday, 'Wh')
-          %td= pp_si(data_point.yield_yesterday - data_point.consumption_yesterday, 'Wh')
+          %td= pp_si(data_point.production_yesterday, 'Wh')
+          %td= pp_si(data_point.production_yesterday - data_point.consumption_yesterday, 'Wh')
         %tr
           %th{ scope: 'row' } Month
           %td= pp_si(data_point.consumption_month, 'Wh')
-          %td= pp_si(data_point.yield_month, 'Wh')
-          %td= pp_si(data_point.yield_month - data_point.consumption_month, 'Wh')
+          %td= pp_si(data_point.production_month, 'Wh')
+          %td= pp_si(data_point.production_month - data_point.consumption_month, 'Wh')
         %tr
           %th{ scope: 'row' } Year
           %td= pp_si(data_point.consumption_year, 'Wh')
-          %td= pp_si(data_point.yield_year, 'Wh')
-          %td= pp_si(data_point.yield_year - data_point.consumption_year, 'Wh')
+          %td= pp_si(data_point.production_year, 'Wh')
+          %td= pp_si(data_point.production_year - data_point.consumption_year, 'Wh')
         %tr
           %th{ scope: 'row' } Total
           %td= pp_si(data_point.consumption_total, 'Wh')
-          %td= pp_si(data_point.yield_total, 'Wh')
-          %td= pp_si(data_point.yield_total - data_point.consumption_total, 'Wh')
+          %td= pp_si(data_point.production_total, 'Wh')
+          %td= pp_si(data_point.production_total - data_point.consumption_total, 'Wh')
