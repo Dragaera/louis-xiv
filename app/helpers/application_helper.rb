@@ -25,12 +25,18 @@ module LouisXiv
       end
 
       def pp_si(value, unit)
+        return '' if value.nil?
+
         if value.abs < 1_000
           "#{ value } #{ unit }"
         elsif value.abs < 1_000_000
           "#{ value / 1_000.0 } k#{ unit }"
-        else
+        elsif value.abs < 1_000_000_000
           "#{ value / 1_000_000.0 } M#{ unit }"
+        elsif value.abs < 1_000_000_000_000
+          "#{ value / 1_000_000_000.0 } G#{ unit }"
+        else
+          "#{ value / 1_000_000_000_000.0 } T#{ unit }"
         end
       end
 

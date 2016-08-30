@@ -69,4 +69,31 @@ RSpec.describe "LouisXiv::App::ApplicationHelper" do
   end
 
   pending '::pp_form_errors'
+
+  describe '::pp_int' do
+    it 'should separate numbers into packs of 3' do
+      expect(subject.pp_int(5)).to eq '5'
+      expect(subject.pp_int(1234)).to eq "1'234"
+      expect(subject.pp_int(12_003_000)).to eq "12'003'000"
+    end
+
+    it 'should handle decimal numbers properly' do
+      expect(subject.pp_int(0.5)).to eq '0.5'
+      expect(subject.pp_int(1450.25)).to eq "1'450.25"
+    end
+  end
+
+  describe '::pp_si' do
+    it 'should convert up to the terra-prefix' do
+      expect(subject.pp_si(5, 'W')).to eq '5 W'
+      expect(subject.pp_si(2581, 'm')).to eq '2.581 km'
+      expect(subject.pp_si(10_500_000_000, 'B')).to eq "10.5 GB"
+      expect(subject.pp_si(1_702_000_000_000, 'rad')).to eq '1.702 Trad'
+    end
+
+    it 'should handle nil gracefully' do
+      expect { subject.pp_si(nil, 'T') }.to_not raise_exception
+      expect(subject.pp_si(nil, 'T')).to eq ''
+    end
+  end
 end
