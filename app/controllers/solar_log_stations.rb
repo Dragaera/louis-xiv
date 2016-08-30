@@ -69,4 +69,10 @@ LouisXiv::App.controllers :solar_log_stations do
     redirect(url(:solar_log_stations, :index))
   end
 
+  post :update_data, map: '/solar_log_stations/:id/update_data' do
+    solar_log_station = get_or_404(SolarLogStation, params.fetch('id').to_i)
+
+    solar_log_station.async_update_data
+  end
+
 end
