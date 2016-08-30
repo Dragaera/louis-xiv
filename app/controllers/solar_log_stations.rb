@@ -72,7 +72,11 @@ LouisXiv::App.controllers :solar_log_stations do
   post :update_data, map: '/solar_log_stations/:id/update_data' do
     solar_log_station = get_or_404(SolarLogStation, params.fetch('id').to_i)
 
-    solar_log_station.async_update_data
+    if solar_log_station.async_update_data
+      redirect(url(:solar_log_stations, :show, id: solar_log_station.id), success: "Scheduled update for #{ solar_log_station.name }")
+    else
+      redirect(url(:solar_log_stations, :show, id: solar_log_station.id), error: "Failed to schedule update for #{ solar_log_station.name }")
+    end
   end
 
 end
