@@ -15,6 +15,23 @@ class SolarLogStation < Sequel::Model
 
   many_to_many :solar_log_triggers, delay_pks: true
   one_to_many  :solar_log_data_points
+
+  def data_point
+    if solar_log_data_points.count > 0
+      solar_log_data_points.first
+    else
+      add_solar_log_data_point(SolarLogDataPoint.new)
+    end
+  end
+
+  def async_update_data
+    Resque.enqueue(Tasks::UpdateSolarLogStationData, id)
+  end
+
+  def update_data
+    data_point.update_data
+    update(checked_at: DateTime.now)
+  end
 end
 
 # Allow sane deletion of stations by deleting all entries in many-to-many table.
