@@ -14,6 +14,7 @@ class SolarLogStation < Sequel::Model
   end
 
   many_to_many :solar_log_triggers, delay_pks: true
+  one_to_many  :solar_log_data_points
 end
 
 # Allow sane deletion of stations by deleting all entries in many-to-many table.
