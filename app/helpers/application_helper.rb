@@ -20,6 +20,20 @@ module LouisXiv
         end
       end
 
+      def pp_int(int)
+        int.to_s.reverse.gsub(/(\d{3})(?=\d)/, "\\1'").reverse
+      end
+
+      def pp_si(value, unit)
+        if value.abs < 1_000
+          "#{ value } #{ unit }"
+        elsif value.abs < 1_000_000
+          "#{ value / 1_000.0 } k#{ unit }"
+        else
+          "#{ value / 1_000_000.0 } M#{ unit }"
+        end
+      end
+
       def to_int(values, strict: true)
         out = []
         values.each do |x|
