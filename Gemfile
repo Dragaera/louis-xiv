@@ -23,6 +23,7 @@ gem 'sequel'
 gem 'padrino', '0.13.3'
 
 gem 'resque'
+gem 'resque-scheduler'
 
 gem 'sunscout'
 

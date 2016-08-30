@@ -8,4 +8,14 @@ module Tasks
       station.update_data
     end
   end
+
+  class UpdateSolarLogStations
+    @queue = :tasks
+
+    def self.perform
+      SolarLogStation.active.each do |station|
+        station.async_update_data
+      end
+    end
+  end
 end

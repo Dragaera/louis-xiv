@@ -1,0 +1,7 @@
+---
+update_solar_log_stations:
+  cron: "* * * * *"
+  class: "Tasks::UpdateSolarLogStations"
+  queue: tasks
+  args: 
+  description: "Schedule update of all SolarLog stations"
