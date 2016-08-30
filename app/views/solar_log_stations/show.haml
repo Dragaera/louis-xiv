@@ -21,7 +21,7 @@
       = submit_tag 'Delete', class: 'btn btn-danger'
 
     = form_tag url(:solar_log_stations, :update_data, id: @solar_log_station.id), method: 'post', class: 'btn' do
-      = submit_tag 'Delete', class: 'btn btn-success'
+      = submit_tag 'Update Data', class: 'btn btn-success'
 
 
   .col-md-6
@@ -59,31 +59,46 @@
 - if data_point.timestamp
 
   .row
-    .col-md-3
+    .col-md-6
       %table.table.table-bordered
+        %thead
+          %tr
+            %th #
+            %th AC
+            %th DC
         %tbody
           %tr
-            %th{ scope: 'row' } DC Voltage
+            %th{ scope: 'row' } Voltage
             %td= pp_si(data_point.voltage_ac, 'V')
-          %tr
-            %th{ scope: 'row' } AC Voltage
             %td= pp_si(data_point.voltage_dc, 'V')
+
           %tr
-            %th{ scope: 'row' } DC Power
-            %td= pp_si(data_point.power_dc, 'W')
-          %tr
-            %th{ scope: 'row' } AC Power
+            %th{ scope: 'row' } Power
             %td= pp_si(data_point.power_ac, 'W')
-          %tr
-            %th{ scope: 'row' } AC Consumption
-            %td= pp_si(data_point.consumption_ac, 'W')
-          %tr
-            %th{ scope: 'row' } Peak Capacity
-            %td= pp_si(data_point.power_max, 'W')
+            %td= pp_si(data_point.power_dc, 'W')
 
+          %tr.active
+            %td{ colspan: 3 }
+          %tr
+            %th Consumption AC
+            %td{ colspan: 2 }= pp_si(data_point.consumption_ac, 'W')
+          %tr
+            %th Available Power
+            %td{ colspan: 2 }= pp_si(data_point.power_available, 'W')
+          %tr
+            %th Usage
+            %td{ colspan: 2 }= "#{ (data_point.usage * 100).round(0) } %"
 
-  .row
-    .col-md-12
+          %tr.active
+            %td{ colspan: 3 }
+          %tr
+            %th Alternator Efficiency
+            %td{ colspan: 2 }= "#{ (data_point.efficiency * 100).round(0) } %"
+          %tr
+            %th Alternator Loss
+            %td{ colspan: 2 }= pp_si(data_point.alternator_loss, 'W')
+
+    .col-md-6
       %table.table.table-hover.table-bordered
         %thead
           %tr
