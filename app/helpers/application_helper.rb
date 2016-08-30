@@ -3,6 +3,14 @@
 module LouisXiv
   class App
     module ApplicationHelper
+      SI_PREFIXES = {
+        10**3  => 'k',
+        10**6  => 'M',
+        10**9  => 'G',
+        10**12 => 'T',
+        10**15 => 'P',
+      }
+
       def to_bool(value)
         case value
         when 0, '0', 'false', 'off', 'no'
@@ -27,17 +35,14 @@ module LouisXiv
       def pp_si(value, unit)
         return '' if value.nil?
 
-        if value.abs < 1_000
-          "#{ value } #{ unit }"
-        elsif value.abs < 1_000_000
-          "#{ value / 1_000.0 } k#{ unit }"
-        elsif value.abs < 1_000_000_000
-          "#{ value / 1_000_000.0 } M#{ unit }"
-        elsif value.abs < 1_000_000_000_000
-          "#{ value / 1_000_000_000.0 } G#{ unit }"
-        else
-          "#{ value / 1_000_000_000_000.0 } T#{ unit }"
+        SI_PREFIXES.sort { |ary1, ary2| ary2.first <=> ary1.first }.each do |multiplier, prefix|
+          if value > multiplier
+            new_value = value.to_f / multiplier
+            return "#{ new_value } #{ prefix }#{ unit }"
+          end
         end
+
+        return "#{ value } #{ unit }"
       end
 
       def to_int(values, strict: true)

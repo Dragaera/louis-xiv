@@ -90,10 +90,5 @@ RSpec.describe "LouisXiv::App::ApplicationHelper" do
       expect(subject.pp_si(10_500_000_000, 'B')).to eq "10.5 GB"
       expect(subject.pp_si(1_702_000_000_000, 'rad')).to eq '1.702 Trad'
     end
-
-    it 'should handle nil gracefully' do
-      expect { subject.pp_si(nil, 'T') }.to_not raise_exception
-      expect(subject.pp_si(nil, 'T')).to eq ''
-    end
   end
 end
