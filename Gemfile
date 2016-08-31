@@ -25,6 +25,8 @@ gem 'padrino', '0.13.3'
 gem 'resque'
 gem 'resque-scheduler'
 
+gem 'dentaku'
+
 gem 'sunscout'
 
 group :test do

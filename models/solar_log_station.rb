@@ -24,13 +24,21 @@ class SolarLogStation < Sequel::Model
     end
   end
 
-  def async_update_data
-    Resque.enqueue(Tasks::UpdateSolarLogStationData, id)
-  end
-
-  def update_data
+  def update_data(chain_sync: false)
     data_point.update_data
     update(checked_at: DateTime.now)
+
+    solar_log_triggers_dataset.where(active: true) do |trigger|
+      if chain_sync
+        trigger.check(self, chain_sync)
+      else
+        trigger.async_check(self)
+      end
+    end
+  end
+
+  def async_update_data
+    Resque.enqueue(Tasks::UpdateSolarLogStationData, id)
   end
 end
 

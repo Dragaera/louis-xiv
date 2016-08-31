@@ -35,6 +35,14 @@ class MakerAction < Sequel::Model
   def inactive_maker_events
     maker_events_dataset.where(active: false).to_a
   end
+
+  def async_execute
+
+  end
+
+  def execute(chain_sync: false)
+
+  end
 end
 
 # Allow sane deletion of actions by deleting all entries in many-to-many table.
