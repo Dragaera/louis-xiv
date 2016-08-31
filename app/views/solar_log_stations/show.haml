@@ -52,11 +52,10 @@
 
 - data_point = @solar_log_station.data_point
 
-%h2 
-  Metrics
-  %small= "Data from: #{ pretty_print_date(data_point.timestamp, alt: '(never)') }"
-
-- if data_point.timestamp
+- if data_point && data_point.timestamp
+  %h2 
+    Metrics
+    %small= "Data from: #{ pretty_print_date(data_point.timestamp, alt: '(never)') }"
 
   .row
     .col-md-6
