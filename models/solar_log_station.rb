@@ -28,7 +28,7 @@ class SolarLogStation < Sequel::Model
     data_point.update_data
     update(checked_at: DateTime.now)
 
-    solar_log_triggers_dataset.where(active: true) do |trigger|
+    solar_log_triggers_dataset.where(active: true).each do |trigger|
       if chain_sync
         trigger.check(self, chain_sync)
       else
