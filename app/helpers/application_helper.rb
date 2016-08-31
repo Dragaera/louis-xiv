@@ -36,7 +36,7 @@ module LouisXiv
         return '' if value.nil?
 
         SI_PREFIXES.sort { |ary1, ary2| ary2.first <=> ary1.first }.each do |multiplier, prefix|
-          if value > multiplier
+          if value > multiplier || value < multiplier * -1
             new_value = value.to_f / multiplier
             return "#{ new_value } #{ prefix }#{ unit }"
           end

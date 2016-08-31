@@ -90,5 +90,10 @@ RSpec.describe "LouisXiv::App::ApplicationHelper" do
       expect(subject.pp_si(10_500_000_000, 'B')).to eq "10.5 GB"
       expect(subject.pp_si(1_702_000_000_000, 'rad')).to eq '1.702 Trad'
     end
+
+    it 'should handle negative numbers' do
+      expect(subject.pp_si(-7, 'm')).to eq '-7 m'
+      expect(subject.pp_si(-52_480_000, 'W')).to eq "-52.48 MW"
+    end
   end
 end
