@@ -17,28 +17,17 @@ class SolarLogStation < Sequel::Model
   one_to_many  :solar_log_data_points
 
   def data_point
-    if solar_log_data_points.count > 0
-      solar_log_data_points.first
-    else
-      add_solar_log_data_point(SolarLogDataPoint.new)
-    end
-  end
-
-  def update_data(chain_sync: false)
-    data_point.update_data
-    update(checked_at: DateTime.now)
-
-    solar_log_triggers_dataset.where(active: true).each do |trigger|
-      if chain_sync
-        trigger.check(self, chain_sync)
-      else
-        trigger.async_check(self)
-      end
-    end
+    # @Todo: Might be better to keep an FK pointing at most recent data point
+    solar_log_data_points_dataset.order(Sequel.desc(:id)).first
   end
 
   def async_update_data
-    Resque.enqueue(Tasks::UpdateSolarLogStationData, id)
+    logger.info "Scheduling update of data of station '#{ name }'"
+    Resque.enqueue(Tasks::UpdateStationData, id)
+  end
+
+  def update_data
+    Tasks::UpdateStationData.perform(id)
   end
 end
 
