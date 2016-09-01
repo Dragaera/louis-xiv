@@ -11,12 +11,17 @@ module Tasks
       key = MakerKey[key_id]
       raise KeyError, "No MakerKey with id '#{ key_id.inspect }'" if key.nil?
 
-      logger.info "Sending '#{ event.name }' to key '#{ key.name }'"
+      logger.info "Sending '#{ event.name }' (#{ event.event }) to key '#{ key.name }'"
 
-      uri = URI % [key.key, event.event]
+      uri = URI % [event.event, key.key]
+      logger.debug "POSTing to #{ uri }"
 
       # @Todo: Error handling / logging
-      HTTParty.post(uri)
+      response = HTTParty.post(uri)
+      logger.debug "Response code: #{ response.code }"
+      logger.debug "Response body: #{ response.body }"
+      logger.debug "Response message: #{ response.message }"
+      logger.debug "Response headers: #{ response.headers.inspect }"
 
       now = DateTime.now
       key.update(used_at: now)
