@@ -24,64 +24,71 @@ class SolarLogTrigger < Sequel::Model
     maker_actions_dataset.where(active: false)
   end
 
-  def check(station, chain_sync: false)
-    data = station.data_point
-    calculator = Dentaku::Calculator.new
-    calculator.store(
-      power_ac: data.power_ac,
-      power_dc: data.power_dc,
-      capacity: data.capacity,
-      efficiency: data.efficiency,
-      alternator_loss: data.alternator_loss,
-
-      voltage_ac: data.voltage_ac,
-      voltage_dc: data.voltage_dc,
-
-      consumption_ac: data.consumption_ac,
-      usage: data.usage,
-      power_available: data.power_available,
-
-      consumption_day: data.consumption_day,
-      consumption_yesterday: data.consumption_yesterday,
-      consumption_month: data.consumption_month,
-      consumption_year: data.consumption_year,
-      consumption_total: data.consumption_total,
-
-      production_day: data.production_day,
-      production_yesterday: data.production_yesterday,
-      production_month: data.production_month,
-      production_year: data.production_year,
-      production_total: data.production_total
-    )
-
-    begin
-      now = DateTime.now
-      if calculator.evaluate!(condition)
-        update(used_at: now)
-
-        maker_actions.each do |action|
-          if chain_sync
-            action.execute(chain_sync)
-          else
-            action.async_execute
-          end
-        end
-      end
-      update(checked_at: now)
-    rescue Dentaku::UnboundVariableError, e
-      # @Todo: Store failure somewhere
+  def async_check(station = nil)
+    if station
+      logger.info "Scheduling check of trigger '#{ name }' with data of station '#{ station.name }'"
+      Resque.enqueue(Tasks::CheckTrigger, id, station.id)
+    else
+      solar_log_stations_dataset.where(active: true).each { |my_station| async_check(my_station) }
     end
   end
 
-  def async_check(station = nil)
-    if station.nil?
-      solar_log_stations_dataset.where(active: true).each do |my_station|
-        async_check(my_station)
+  def check(station = nil)
+    if station
+      begin
+        logger.info "Checking trigger '#{ name }' with data of station '#{ station.name }'"
+
+        data_point = station.data_point
+        raise ArgumentError, "Station '#{ station.name }' has no data points" if data_point.nil?
+
+        calculator = Dentaku::Calculator.new
+        calculator.store(
+          power_ac:        data_point.power_ac,
+          power_dc:        data_point.power_dc,
+          capacity:        data_point.capacity,
+          efficiency:      data_point.efficiency,
+          alternator_loss: data_point.alternator_loss,
+
+          voltage_ac: data_point.voltage_ac,
+          voltage_dc: data_point.voltage_dc,
+
+          consumption_ac:  data_point.consumption_ac,
+          usage:           data_point.usage,
+          power_available: data_point.power_available,
+
+          consumption_day:       data_point.consumption_day,
+          consumption_yesterday: data_point.consumption_yesterday,
+          consumption_month:     data_point.consumption_month,
+          consumption_year:      data_point.consumption_year,
+          consumption_total:     data_point.consumption_total,
+
+          production_day:       data_point.production_day,
+          production_yesterday: data_point.production_yesterday,
+          production_month:     data_point.production_month,
+          production_year:      data_point.production_year,
+          production_total:     data_point.production_total
+        )
+
+        now = DateTime.now
+        update(checked_at: now)
+        if calculator.evaluate!(condition)
+          logger.info('Trigger condition matched')
+          update(used_at: now)
+          # LEFTOFF:
+          # - Trigger trigger
+        else
+          logger.info('Trigger condition did not match')
+        end
+
+      rescue Dentaku::UnboundVariableError, Dentaku::ParserError, RuntimeError => e
+        logger.error("Exception while evaluationg condition: #{ e.message }")
+        raise
       end
     else
-      Resque.enqueue(Tasks::CheckSolarLogTrigger, id, station.id)
+      solar_log_stations.dataset.where(active: true).each { |my_station| check(my_station) }
     end
   end
+
 end
 
 # Allow sane deletion of triggers by deleting all entries in many-to-many table.

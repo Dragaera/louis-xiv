@@ -64,6 +64,10 @@ class SolarLogStation < Sequel::Model
     update(checked_at: DateTime.now)
 
     logger.info "Successfully updated data"
+
+    solar_log_triggers_dataset.where(active: true).each do |trigger|
+      trigger.async_check(self)
+    end
   rescue StandardError => e
     # Not pretty... But there's a whole slew of possible errors.
     logger.error "Exception while updating station data: #{ e.message }"
