@@ -17,8 +17,21 @@
 
   .form-group
     = f.label :condition
-    = f.text_area :condition, class: 'form-control', required: true
-
+    = f.text_area :condition, class: 'form-control', required: true, placeholder: "power_ac < 50 AND ROUND(efficiency, 2) < 0.5"
+    %span.help-block
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title Condition syntax
+        .panel-body
+          %dl
+            %dt Math operators
+            %dd +, -, *, /, ^, %
+            %dt Logic
+            %dd= "AND, OR, <, <=, >=, >, =, <>, !="
+            %dt Functions
+            %dd IF, NOT, MIN, MAX, ROUND, ROUNDDOWN, ROUNDUP
+            %dt Variables
+            %dd power_ac [W], power_dc [W], power_max [W], capacity [%], voltage_ac [V], voltage_dc [V], consumption_ac [W], usage [%], power_available [W], efficiency [%], alternator_loss [W], consumption_day [Wh], consumption_yesterday [Wh], consumption_month [Wh], consumption_total [Wh], production_day [Wh], production_yesterday [Wh], production_month [Wh], production_total [Wh]
   .form-group
     = f.label :maker_actions
     %select.form-control.select2{ multiple: 'multiple', name: 'solar_log_trigger[maker_actions][]' }
