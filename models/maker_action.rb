@@ -37,8 +37,9 @@ class MakerAction < Sequel::Model
   end
 
   def async_execute
+    logger.info "Executing action '#{ name }'"
     active_maker_keys.product(active_maker_events) do |key, event|
-      logger.info "Scheduling execution of event '#{ event.name }' on key '#{ key.name }'"
+      logger.info "Scheduling sending of event '#{ event.name }' to key '#{ key.name }'"
       Resque.enqueue(Tasks::CallMakerEvent, event.id, key.id)
     end
     update(used_at: DateTime.now)

@@ -11,7 +11,7 @@ module Tasks
       key = MakerKey[key_id]
       raise KeyError, "No MakerKey with id '#{ key_id.inspect }'" if key.nil?
 
-      logger.info "Triggering '#{ event.name }' on key '#{ key.name }'"
+      logger.info "Sending '#{ event.name }' to key '#{ key.name }'"
 
       uri = URI % [key.key, event.event]
 

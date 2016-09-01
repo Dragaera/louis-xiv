@@ -74,8 +74,10 @@ class SolarLogTrigger < Sequel::Model
         if calculator.evaluate!(condition)
           logger.info('Trigger condition matched')
           update(used_at: now)
-          # LEFTOFF:
-          # - Trigger trigger
+
+          maker_actions_dataset.where(active: true).each do |action|
+            action.async_execute
+          end
         else
           logger.info('Trigger condition did not match')
         end
