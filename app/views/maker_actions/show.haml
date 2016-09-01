@@ -20,6 +20,8 @@
     = form_tag url(:maker_actions, :delete, id: @maker_action.id), method: 'post', class: 'btn' do
       = submit_tag 'Delete', class: 'btn btn-danger'
 
+    = form_tag url(:maker_actions, :execute, id: @maker_action.id), method: 'post', class: 'btn' do
+      = submit_tag 'Execute', class: 'btn btn-success'
 .row
   .col-md-6
     %h2 Details

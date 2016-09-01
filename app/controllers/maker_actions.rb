@@ -107,4 +107,16 @@ LouisXiv::App.controllers :maker_actions do
     redirect(url(:maker_actions, :index))
   end
 
+  post :execute, map: '/maker_actions/:id/execute' do
+    action = get_or_404(MakerAction, params.fetch('id').to_i)
+
+    if action.async_execute
+      opts = { success: "Scheduled execution of action '#{ action.name }'" }
+    else
+      opts = { error: "Failed to schedule execution of action '#{ action.name }'" }
+    end
+
+    redirect(url(:maker_actions, :show, id: action.id), opts)
+  end
+
 end

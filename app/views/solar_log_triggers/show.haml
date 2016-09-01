@@ -20,6 +20,8 @@
     = form_tag url(:solar_log_triggers, :delete, id: @solar_log_trigger.id), method: 'post', class: 'btn' do
       = submit_tag 'Delete', class: 'btn btn-danger'
 
+    = form_tag url(:solar_log_triggers, :check, id: @solar_log_trigger.id), method: 'post', class: 'btn' do
+      = submit_tag 'Check', class: 'btn btn-success'
 .row
   .col-md-6
     %h2 Details

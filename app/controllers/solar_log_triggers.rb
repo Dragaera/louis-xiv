@@ -107,4 +107,16 @@ LouisXiv::App.controllers :solar_log_triggers do
     redirect(url(:solar_log_triggers, :index))
   end
 
+  post :check, map: '/solar_log_triggers/:id/check' do
+    trigger = get_or_404(SolarLogTrigger, params.fetch('id').to_i)
+
+    if trigger.async_check
+      opts = { success: "Scheduled check of trigger '#{ trigger.name }'" }
+    else
+      opts = { error: "Failed to schedule check of trigger '#{ trigger.name }'" }
+    end
+
+    redirect(url(:solar_log_triggers, :show, id: trigger.id), opts)
+  end
+
 end
