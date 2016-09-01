@@ -45,6 +45,7 @@ class SolarLogTrigger < Sequel::Model
         calculator.store(
           power_ac:        data_point.power_ac,
           power_dc:        data_point.power_dc,
+          power_max:       data_point.power_max,
           capacity:        data_point.capacity,
           efficiency:      data_point.efficiency,
           alternator_loss: data_point.alternator_loss,
