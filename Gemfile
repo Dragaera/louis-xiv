@@ -22,11 +22,16 @@ gem 'sequel'
 
 gem 'padrino', '0.13.3'
 
+# Background processes
 gem 'resque'
 gem 'resque-scheduler'
 
+# Evaluating expressions
 gem 'dentaku'
+# Sane HTTP
+gem 'httparty'
 
+# SolarLog API client
 gem 'sunscout'
 
 group :test do
