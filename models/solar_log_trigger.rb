@@ -82,7 +82,7 @@ class SolarLogTrigger < Sequel::Model
           logger.info('Trigger condition did not match')
         end
 
-      rescue Dentaku::UnboundVariableError, Dentaku::ParserError, RuntimeError => e
+      rescue Dentaku::UnboundVariableError, Dentaku::ParseError, RuntimeError => e
         logger.error("Exception while evaluationg condition: #{ e.message }")
         raise
       end
