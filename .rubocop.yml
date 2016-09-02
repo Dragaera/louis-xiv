@@ -1,0 +1,8 @@
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'bin/**'
+    - 'public/**/*'
+
+Style/SpaceInsideStringInterpolation:
+  Enabled: false
