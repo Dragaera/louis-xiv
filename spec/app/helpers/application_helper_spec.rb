@@ -86,14 +86,28 @@ RSpec.describe "LouisXiv::App::ApplicationHelper" do
   describe '::pp_si' do
     it 'should convert up to the terra-prefix' do
       expect(subject.pp_si(5, 'W')).to eq '5 W'
-      expect(subject.pp_si(2581, 'm')).to eq '2.581 km'
+      expect(subject.pp_si(2580, 'm')).to eq '2.58 km'
       expect(subject.pp_si(10_500_000_000, 'B')).to eq "10.5 GB"
-      expect(subject.pp_si(1_702_000_000_000, 'rad')).to eq '1.702 Trad'
+      expect(subject.pp_si(1_700_000_000_000, 'rad')).to eq '1.7 Trad'
+    end
+
+    it 'should support rounding after conversion' do
+      expect(subject.pp_si(1545, 'm')).to eq '1.55 km'
+      expect(subject.pp_si(1545, 'm', round: 0)).to eq '2 km'
+      expect(subject.pp_si(1545, 'm', round: 3)).to eq '1.545 km'
     end
 
     it 'should handle negative numbers' do
       expect(subject.pp_si(-7, 'm')).to eq '-7 m'
       expect(subject.pp_si(-52_480_000, 'W')).to eq "-52.48 MW"
+    end
+
+    it 'should handle convert if >= prefix' do
+      expect(subject.pp_si(1_000, 'B')).to eq '1.0 kB'
+    end
+
+    it 'should pretty-print numbers if no sufficiently high conversion factor is defined' do
+      expect(subject.pp_si(1_000_000_000_000_000_000, 'B')).to eq "1'000.0 PB"
     end
   end
 end

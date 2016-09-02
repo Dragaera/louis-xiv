@@ -32,13 +32,13 @@ module LouisXiv
         int.to_s.reverse.gsub(/(\d{3})(?=\d)/, "\\1'").reverse
       end
 
-      def pp_si(value, unit)
+      def pp_si(value, unit, round: 2)
         return '' if value.nil?
 
         SI_PREFIXES.sort { |ary1, ary2| ary2.first <=> ary1.first }.each do |multiplier, prefix|
-          if value > multiplier || value < multiplier * -1
-            new_value = value.to_f / multiplier
-            return "#{ new_value } #{ prefix }#{ unit }"
+          if value >= multiplier || value < multiplier * -1
+            new_value = (value.to_f / multiplier).round(round)
+            return "#{ pp_int(new_value) } #{ prefix }#{ unit }"
           end
         end
 
