@@ -17,9 +17,7 @@ module Tasks
 
     def self.perform
       logger.info 'Scheduling updates of all active stations'
-      SolarLogStation::active.each do |station|
-        station.async_update_data
-      end
+      SolarLogStation.active.each(&:async_update_data)
     end
   end
 end

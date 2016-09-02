@@ -1,5 +1,4 @@
 LouisXiv::App.controllers :application do
-
   get :home, map: '/' do
     render 'home'
   end
@@ -9,5 +8,4 @@ LouisXiv::App.controllers :application do
 
     render 'not_found'
   end
-
 end

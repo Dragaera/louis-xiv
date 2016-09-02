@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe 'LouisXiv::App::ApplicationHelper' do
-  let(:helpers){ Class.new }
+  let(:helpers) { Class.new }
   before { helpers.extend LouisXiv::App::ApplicationHelper }
   subject { helpers }
 

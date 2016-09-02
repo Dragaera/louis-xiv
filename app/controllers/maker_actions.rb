@@ -1,5 +1,4 @@
 LouisXiv::App.controllers :maker_actions do
-
   get :index do
     @maker_actions = MakerAction.order(:name)
     render 'index'
@@ -27,7 +26,7 @@ LouisXiv::App.controllers :maker_actions do
     errors = []
 
     begin
-      Sequel::Model::db.transaction do
+      Sequel::Model.db.transaction do
         maker_action.maker_key_pks   = maker_key_ids
         maker_action.maker_event_pks = maker_event_ids
 
@@ -58,7 +57,7 @@ LouisXiv::App.controllers :maker_actions do
 
   get :edit, map: '/maker_actions/:id/edit' do
     @maker_action = session['maker_action'] || 
-      get_or_404(MakerAction, params.fetch('id').to_i)
+                    get_or_404(MakerAction, params.fetch('id').to_i)
     session.delete 'maker_action'
 
     render 'edit'
@@ -79,14 +78,14 @@ LouisXiv::App.controllers :maker_actions do
     errors = []
 
     begin
-      Sequel::Model::db.transaction do
+      Sequel::Model.db.transaction do
         maker_action.maker_key_pks   = maker_key_ids
         maker_action.maker_event_pks = maker_event_ids
 
         if maker_action.valid?
           maker_action.save
           redirect(url(:maker_actions, :show, id: maker_action.id), 
-                       success: "Modified '#{ maker_action.name }'")
+                   success: "Modified '#{ maker_action.name }'")
         end
 
         # Action not valid due to missing name etc
@@ -122,5 +121,4 @@ LouisXiv::App.controllers :maker_actions do
 
     redirect(url(:maker_actions, :show, id: action.id), opts)
   end
-
 end

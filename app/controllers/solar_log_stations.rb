@@ -1,5 +1,4 @@
 LouisXiv::App.controllers :solar_log_stations do
-
   get :index do
     @solar_log_stations = SolarLogStation.order(:name)
     render 'index'
@@ -7,7 +6,7 @@ LouisXiv::App.controllers :solar_log_stations do
 
   get :new do
     @solar_log_station = session['solar_log_station'] || 
-      SolarLogStation.new(active: true)
+                         SolarLogStation.new(active: true)
     session.delete 'solar_log_station'
 
     render 'new'
@@ -40,7 +39,7 @@ LouisXiv::App.controllers :solar_log_stations do
 
   get :edit, map: '/solar_log_stations/:id/edit' do
     @solar_log_station = session['solar_log_station'] || 
-      get_or_404(SolarLogStation, params.fetch('id').to_i)
+                         get_or_404(SolarLogStation, params.fetch('id').to_i)
     session.delete 'solar_log_station'
 
     render 'edit'
@@ -63,7 +62,7 @@ LouisXiv::App.controllers :solar_log_stations do
       # @Todo: Marshal
       session['solar_log_station'] = solar_log_station
       redirect(url(:solar_log_stations, :edit, id: solar_log_station.id), 
-                   form_error: pp_form_errors(solar_log_station.errors))
+               form_error: pp_form_errors(solar_log_station.errors))
     end
   end
 
@@ -85,5 +84,4 @@ LouisXiv::App.controllers :solar_log_stations do
                error: "Failed to schedule update for #{ solar_log_station.name }")
     end
   end
-
 end

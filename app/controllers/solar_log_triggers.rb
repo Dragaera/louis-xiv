@@ -1,5 +1,4 @@
 LouisXiv::App.controllers :solar_log_triggers do
-
   get :index do
     @solar_log_triggers = SolarLogTrigger.order(:name)
     render 'index'
@@ -7,7 +6,7 @@ LouisXiv::App.controllers :solar_log_triggers do
 
   get :new do
     @solar_log_trigger = session['solar_log_trigger'] || 
-      SolarLogTrigger.new(active: true)
+                         SolarLogTrigger.new(active: true)
     session.delete 'solar_log_trigger'
 
     render 'new'
@@ -29,7 +28,7 @@ LouisXiv::App.controllers :solar_log_triggers do
     errors = []
 
     begin
-      Sequel::Model::db.transaction do
+      Sequel::Model.db.transaction do
         solar_log_trigger.maker_action_pks = maker_action_ids
         solar_log_trigger.solar_log_station_pks = solar_log_station_ids
 
@@ -60,7 +59,7 @@ LouisXiv::App.controllers :solar_log_triggers do
 
   get :edit, map: '/solar_log_triggers/:id/edit' do
     @solar_log_trigger = session['solar_log_trigger'] || 
-      get_or_404(SolarLogTrigger, params.fetch('id').to_i)
+                         get_or_404(SolarLogTrigger, params.fetch('id').to_i)
     session.delete 'solar_log_trigger'
 
     render 'edit'
@@ -84,14 +83,14 @@ LouisXiv::App.controllers :solar_log_triggers do
     errors = []
 
     begin
-      Sequel::Model::db.transaction do
+      Sequel::Model.db.transaction do
         solar_log_trigger.maker_action_pks = maker_action_ids
         solar_log_trigger.solar_log_station_pks = solar_log_station_ids
 
         if solar_log_trigger.valid?
           solar_log_trigger.save
           redirect(url(:solar_log_triggers, :show, id: solar_log_trigger.id), 
-                       success: "Modified '#{ solar_log_trigger.name }'")
+                   success: "Modified '#{ solar_log_trigger.name }'")
         end
 
         # Trigger invalid (missing fields)
@@ -127,5 +126,4 @@ LouisXiv::App.controllers :solar_log_triggers do
 
     redirect(url(:solar_log_triggers, :show, id: trigger.id), opts)
   end
-
 end

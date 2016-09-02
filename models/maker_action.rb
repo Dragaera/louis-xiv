@@ -18,7 +18,8 @@ class MakerAction < Sequel::Model
   # Needed for AssociationPks plugin to work on new objects.
   many_to_many :maker_events,       delay_pks: true
   many_to_many :maker_keys,         delay_pks: true
-  many_to_many :solar_log_triggers, delay_pks: true, 
+  many_to_many :solar_log_triggers,
+               delay_pks:  true,
                join_table: :solar_log_triggers_actions
 
   def active_maker_keys
@@ -48,6 +49,6 @@ class MakerAction < Sequel::Model
 end
 
 # Allow sane deletion of actions by deleting all entries in many-to-many table.
-MakerAction.plugin :association_dependencies, 
-  maker_keys: :nullify, 
-  maker_events: :nullify
+MakerAction.plugin :association_dependencies,
+                   maker_keys: :nullify,
+                   maker_events: :nullify

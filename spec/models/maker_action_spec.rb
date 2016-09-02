@@ -1,19 +1,23 @@
 require 'spec_helper'
 
 RSpec.describe MakerAction do
-  let(:action_simple) { create(:maker_action, 
-                               :with_maker_keys, :with_maker_events,
-                               maker_keys_count: 1, maker_events_count: 1,
-                               name: 'Simple action') }
+  let(:action_simple) do
+    create(:maker_action,
+           :with_maker_keys, :with_maker_events,
+           maker_keys_count: 1, maker_events_count: 1,
+           name: 'Simple action')
+  end
 
-  let(:action_complex) { create(:maker_action,
-                                :inactive,
-                                :with_maker_keys, :with_maker_events,
-                                maker_keys_count: 1, 
-                                inactive_maker_keys_count: 1,
-                                maker_events_count: 1, 
-                                inactive_maker_events_count: 1,
-                                name: 'Complex action') }
+  let(:action_complex) do
+    create(:maker_action,
+           :inactive,
+           :with_maker_keys, :with_maker_events,
+           maker_keys_count: 1,
+           inactive_maker_keys_count: 1,
+           maker_events_count: 1,
+           inactive_maker_events_count: 1,
+           name: 'Complex action')
+  end
 
   describe '#save' do
     it 'should set the default value of #active' do
@@ -73,6 +77,4 @@ RSpec.describe MakerAction do
       expect(MakerAction.inactive).to match_array([action_complex])
     end
   end
-
-
 end

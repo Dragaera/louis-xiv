@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 RSpec.describe SolarLogStation do
-  let(:station_simple) { create(:solar_log_station,
-                                name: 'Simple station') }
+  let(:station_simple) do
+    create(:solar_log_station, name: 'Simple station')
+  end
 
-  let(:station_inactive) { create(:solar_log_station,
-                                  :inactive,
-                                  name: 'Inactive station') }
+  let(:station_inactive) do
+    create(:solar_log_station, :inactive, name: 'Inactive station')
+  end
 
   describe '#save' do
     it 'should set the default value of #active' do

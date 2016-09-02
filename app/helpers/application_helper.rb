@@ -6,8 +6,8 @@ module LouisXiv
         10**6  => 'M',
         10**9  => 'G',
         10**12 => 'T',
-        10**15 => 'P',
-      }
+        10**15 => 'P'
+      }.freeze
 
       def to_bool(value)
         case value
@@ -40,7 +40,7 @@ module LouisXiv
           end
         end
 
-        return "#{ value } #{ unit }"
+        "#{ value } #{ unit }"
       end
 
       def to_int(values, strict: true)
@@ -54,7 +54,7 @@ module LouisXiv
         end
         out
       end
-    end 
+    end
 
     helpers ApplicationHelper
   end
