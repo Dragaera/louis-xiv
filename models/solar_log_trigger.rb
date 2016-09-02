@@ -43,39 +43,7 @@ class SolarLogTrigger < Sequel::Model
       begin
         logger.info "Checking trigger '#{ name }' with data of station '#{ station.name }'"
 
-        data_point = station.data_point
-        if data_point.nil?
-          raise ArgumentError, "Station '#{ station.name }' has no data points"
-        end
-
-        calculator = Dentaku::Calculator.new
-        calculator.store(
-          power_ac:        data_point.power_ac,
-          power_dc:        data_point.power_dc,
-          power_max:       data_point.power_max,
-          capacity:        data_point.capacity,
-          efficiency:      data_point.efficiency,
-          alternator_loss: data_point.alternator_loss,
-
-          voltage_ac: data_point.voltage_ac,
-          voltage_dc: data_point.voltage_dc,
-
-          consumption_ac:  data_point.consumption_ac,
-          usage:           data_point.usage,
-          power_available: data_point.power_available,
-
-          consumption_day:       data_point.consumption_day,
-          consumption_yesterday: data_point.consumption_yesterday,
-          consumption_month:     data_point.consumption_month,
-          consumption_year:      data_point.consumption_year,
-          consumption_total:     data_point.consumption_total,
-
-          production_day:       data_point.production_day,
-          production_yesterday: data_point.production_yesterday,
-          production_month:     data_point.production_month,
-          production_year:      data_point.production_year,
-          production_total:     data_point.production_total
-        )
+        calculator = station.calculator
 
         now = DateTime.now
         update(checked_at: now)
