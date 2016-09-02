@@ -4,7 +4,9 @@ module Tasks
 
     def self.perform(station_id)
       station = SolarLogStation[station_id]
-      raise KeyError, "No SolarLogStation with id '#{ station_id.inspect }' found" if station.nil?
+      if station.nil?
+        raise KeyError, "No SolarLogStation with id '#{ station_id.inspect }' found"
+      end
 
       station.update_data
     end
@@ -14,7 +16,7 @@ module Tasks
     @queue = :tasks
 
     def self.perform
-      logger.info "Scheduling updates of all active stations"
+      logger.info 'Scheduling updates of all active stations'
       SolarLogStation::active.each do |station|
         station.async_update_data
       end

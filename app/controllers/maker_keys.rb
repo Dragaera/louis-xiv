@@ -17,11 +17,13 @@ LouisXiv::App.controllers :maker_keys do
 
     if maker_key.valid?
       maker_key.save
-      redirect(url(:maker_keys, :index), success: "Created Maker key #{ maker_key.name }")
+      redirect(url(:maker_keys, :index), 
+               success: "Created Maker key #{ maker_key.name }")
     else
       # @Todo: Marshal: Avoid full objects in session
       session['maker_key'] = maker_key
-      redirect(url(:maker_keys, :new), form_error: pp_form_errors(maker_key.errors))
+      redirect(url(:maker_keys, :new), 
+               form_error: pp_form_errors(maker_key.errors))
     end
   end
 
@@ -41,16 +43,20 @@ LouisXiv::App.controllers :maker_keys do
     maker_key = get_or_404(MakerKey, params.fetch('id').to_i)
 
     maker_key_params = params.fetch('maker_key')
-    maker_key_params['active'] = to_bool(maker_key_params['active']) if maker_key_params.key? 'active'
+    if maker_key_params.key? 'active'
+      maker_key_params['active'] = to_bool(maker_key_params['active'])
+    end
     maker_key.set(maker_key_params)
 
     if maker_key.valid?
       maker_key.save
-      redirect(url(:maker_keys, :show, id: maker_key.id), success: "Modified #{ maker_key.name }")
+      redirect(url(:maker_keys, :show, id: maker_key.id), 
+                   success: "Modified #{ maker_key.name }")
     else
       # @Todo: Marshal: avoid full objects in session
       session['maker_key'] = maker_key
-      redirect(url(:maker_keys, :edit, id: maker_key.id), form_error: pp_form_errors(maker_key.errors))
+      redirect(url(:maker_keys, :edit, id: maker_key.id), 
+                   form_error: pp_form_errors(maker_key.errors))
     end
   end
 

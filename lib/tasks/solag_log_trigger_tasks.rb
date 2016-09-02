@@ -4,12 +4,18 @@ module Tasks
 
     def self.perform(trigger_id, station_id)
       trigger = SolarLogTrigger[trigger_id]
-      raise KeyError, "No SolarLogTrigger with id '#{ trigger_id.inspect }'" if trigger.nil?
+      if trigger.nil?
+        raise KeyError, "No SolarLogTrigger with id '#{ trigger_id.inspect }'"
+      end
 
       station = SolarLogStation[station_id]
-      raise KeyError, "No SolarLogStation with id '#{ station_id.inspect }'" if station.nil?
+      if station.nil?
+        raise KeyError, "No SolarLogStation with id '#{ station_id.inspect }'"
+      end
 
-      raise ArgumentError, "Trigger '#{ trigger.name }' has no station '#{ station.name }'" unless trigger.solar_log_station_pks.include? station_id
+      unless trigger.solar_log_station_pks.include? station_id
+        raise ArgumentError, "Trigger '#{ trigger.name }' has no station '#{ station.name }'"
+      end
 
       trigger.check(station)
     end

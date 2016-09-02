@@ -1,12 +1,15 @@
 module Tasks
   class CallMakerEvent
-    URI = "https://maker.ifttt.com/trigger/%s/with/key/%s"
+    URI = 'https://maker.ifttt.com/trigger/%s/with/key/%s'
 
     @queue = :tasks
 
     def self.perform(event_id, key_id)
       event = MakerEvent[event_id]
-      raise KeyError, "No MakerEvent with id '#{ event_id.inspect }'" if event.nil?
+
+      if event.nil?
+        raise KeyError, "No MakerEvent with id '#{ event_id.inspect }'"
+      end
 
       key = MakerKey[key_id]
       raise KeyError, "No MakerKey with id '#{ key_id.inspect }'" if key.nil?

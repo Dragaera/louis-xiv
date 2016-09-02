@@ -28,9 +28,9 @@
 Padrino.configure_apps do
   # enable :sessions
   set :session_secret, '0e689dd89649164a41f248119c858c7194b989e0c84819d06bd67e296c0455a2'
-  set :protection, :except => :path_traversal
+  set :protection, except: :path_traversal
   set :protect_from_csrf, true
 end
 
 # Mounts the core application for this project
-Padrino.mount('LouisXiv::App', :app_file => Padrino.root('app/app.rb')).to('/')
+Padrino.mount('LouisXiv::App', app_file: Padrino.root('app/app.rb')).to('/')

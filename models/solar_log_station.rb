@@ -63,7 +63,7 @@ class SolarLogStation < Sequel::Model
     add_solar_log_data_point(data_point)
     update(checked_at: DateTime.now)
 
-    logger.info "Successfully updated data"
+    logger.info 'Successfully updated data'
 
     solar_log_triggers_dataset.where(active: true).each do |trigger|
       trigger.async_check(self)

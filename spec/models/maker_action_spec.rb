@@ -9,8 +9,10 @@ RSpec.describe MakerAction do
   let(:action_complex) { create(:maker_action,
                                 :inactive,
                                 :with_maker_keys, :with_maker_events,
-                                maker_keys_count: 1, inactive_maker_keys_count: 1,
-                                maker_events_count: 1, inactive_maker_events_count: 1,
+                                maker_keys_count: 1, 
+                                inactive_maker_keys_count: 1,
+                                maker_events_count: 1, 
+                                inactive_maker_events_count: 1,
                                 name: 'Complex action') }
 
   describe '#save' do

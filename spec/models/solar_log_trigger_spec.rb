@@ -9,7 +9,8 @@ RSpec.describe SolarLogTrigger do
   let(:trigger_complex) { create(:solar_log_trigger,
                                  :inactive,
                                  :with_maker_actions,
-                                 maker_actions_count: 2, inactive_maker_actions_count: 3,
+                                 maker_actions_count: 2, 
+                                 inactive_maker_actions_count: 3,
                                  name: 'Complex Trigger') }
 
   describe '#save' do
@@ -44,14 +45,16 @@ RSpec.describe SolarLogTrigger do
     describe '#active_maker_actions' do
       it 'should return those which are active' do
         active_actions = trigger_complex.maker_actions_dataset.where(active: true)
-        expect(trigger_complex.active_maker_actions).to match_array(active_actions)
+        expect(trigger_complex.active_maker_actions).
+          to match_array(active_actions)
       end
     end
 
     describe '#inactive_maker_actions' do
       it 'should return those which are inactive' do
         inactive_actions = trigger_complex.maker_actions_dataset.where(active: false)
-        expect(trigger_complex.inactive_maker_actions).to match_array(inactive_actions)
+        expect(trigger_complex.inactive_maker_actions).
+          to match_array(inactive_actions)
       end
     end
 

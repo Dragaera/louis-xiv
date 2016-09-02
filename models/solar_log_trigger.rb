@@ -13,7 +13,9 @@ class SolarLogTrigger < Sequel::Model
     validates_presence [:name, :condition]
   end
 
-  many_to_many :maker_actions,      delay_pks: true, join_table: :solar_log_triggers_actions
+  many_to_many :maker_actions,      delay_pks: true, 
+               join_table: :solar_log_triggers_actions
+
   many_to_many :solar_log_stations, delay_pks: true
 
   def active_maker_actions
@@ -29,7 +31,9 @@ class SolarLogTrigger < Sequel::Model
       logger.info "Scheduling check of trigger '#{ name }' with data of station '#{ station.name }'"
       Resque.enqueue(Tasks::CheckTrigger, id, station.id)
     else
-      solar_log_stations_dataset.where(active: true).each { |my_station| async_check(my_station) }
+      solar_log_stations_dataset.where(active: true).each do |my_station|
+        async_check(my_station)
+      end
     end
   end
 
@@ -39,7 +43,9 @@ class SolarLogTrigger < Sequel::Model
         logger.info "Checking trigger '#{ name }' with data of station '#{ station.name }'"
 
         data_point = station.data_point
-        raise ArgumentError, "Station '#{ station.name }' has no data points" if data_point.nil?
+        if data_point.nil?
+          raise ArgumentError, "Station '#{ station.name }' has no data points"
+        end
 
         calculator = Dentaku::Calculator.new
         calculator.store(
@@ -88,11 +94,15 @@ class SolarLogTrigger < Sequel::Model
         raise
       end
     else
-      solar_log_stations.dataset.where(active: true).each { |my_station| check(my_station) }
+      solar_log_stations.dataset.where(active: true).each do |my_station|
+        check(my_station)
+      end
     end
   end
 
 end
 
 # Allow sane deletion of triggers by deleting all entries in many-to-many table.
-SolarLogTrigger.plugin :association_dependencies, maker_actions: :nullify, solar_log_stations: :nullify
+SolarLogTrigger.plugin :association_dependencies, 
+  maker_actions: :nullify, 
+  solar_log_stations: :nullify

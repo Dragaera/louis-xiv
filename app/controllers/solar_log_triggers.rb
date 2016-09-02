@@ -6,7 +6,8 @@ LouisXiv::App.controllers :solar_log_triggers do
   end
 
   get :new do
-    @solar_log_trigger = session['solar_log_trigger'] || SolarLogTrigger.new(active: true)
+    @solar_log_trigger = session['solar_log_trigger'] || 
+      SolarLogTrigger.new(active: true)
     session.delete 'solar_log_trigger'
 
     render 'new'
@@ -20,8 +21,10 @@ LouisXiv::App.controllers :solar_log_triggers do
       active: to_bool(obj_params.fetch('active'))
     )
 
-    maker_action_ids = to_int(obj_params.fetch('maker_actions', []), strict: false)
-    solar_log_station_ids = to_int(obj_params.fetch('solar_log_stations', []), strict: false)
+    maker_action_ids = to_int(obj_params.fetch('maker_actions', []), 
+                              strict: false)
+    solar_log_station_ids = to_int(obj_params.fetch('solar_log_stations', []), 
+                                   strict: false)
 
     errors = []
 
@@ -32,7 +35,8 @@ LouisXiv::App.controllers :solar_log_triggers do
 
         if solar_log_trigger.valid?
           solar_log_trigger.save
-          redirect(url(:solar_log_triggers, :index), success: "Created SolarLog trigger #{ solar_log_trigger.name }")
+          redirect(url(:solar_log_triggers, :index), 
+                   success: "Created SolarLog trigger #{ solar_log_trigger.name }")
         end
 
         # Trigger invalid (e.g. missing fields)
@@ -55,7 +59,8 @@ LouisXiv::App.controllers :solar_log_triggers do
   end
 
   get :edit, map: '/solar_log_triggers/:id/edit' do
-    @solar_log_trigger = session['solar_log_trigger'] || get_or_404(SolarLogTrigger, params.fetch('id').to_i)
+    @solar_log_trigger = session['solar_log_trigger'] || 
+      get_or_404(SolarLogTrigger, params.fetch('id').to_i)
     session.delete 'solar_log_trigger'
 
     render 'edit'
@@ -71,8 +76,10 @@ LouisXiv::App.controllers :solar_log_triggers do
       active: to_bool(obj_params.fetch('active', false))
     )
 
-    maker_action_ids = to_int(obj_params.fetch('maker_actions', []), strict: false)
-    solar_log_station_ids = to_int(obj_params.fetch('solar_log_stations', []), strict: false)
+    maker_action_ids = to_int(obj_params.fetch('maker_actions', []), 
+                              strict: false)
+    solar_log_station_ids = to_int(obj_params.fetch('solar_log_stations', []), 
+                                   strict: false)
 
     errors = []
 
@@ -83,7 +90,8 @@ LouisXiv::App.controllers :solar_log_triggers do
 
         if solar_log_trigger.valid?
           solar_log_trigger.save
-          redirect(url(:solar_log_triggers, :show, id: solar_log_trigger.id), success: "Modified '#{ solar_log_trigger.name }'")
+          redirect(url(:solar_log_triggers, :show, id: solar_log_trigger.id), 
+                       success: "Modified '#{ solar_log_trigger.name }'")
         end
 
         # Trigger invalid (missing fields)
@@ -97,7 +105,8 @@ LouisXiv::App.controllers :solar_log_triggers do
 
     # @Todo: Marshal
     session['solar_log_trigger'] = solar_log_trigger
-    redirect(url(:solar_log_triggers, :edit, id: solar_log_trigger.id), form_error: errors)
+    redirect(url(:solar_log_triggers, :edit, id: solar_log_trigger.id), 
+             form_error: errors)
   end
 
   post :delete, map: '/solar_log_triggers/:id/delete' do

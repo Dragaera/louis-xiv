@@ -33,7 +33,8 @@ LouisXiv::App.controllers :maker_actions do
 
         if maker_action.valid?
           maker_action.save
-          redirect(url(:maker_actions, :index), success: "Created Maker action #{ maker_action.name }")
+          redirect(url(:maker_actions, :index), 
+                   success: "Created Maker action #{ maker_action.name }")
         end
 
         # Action not valid due to missing name etc
@@ -56,7 +57,8 @@ LouisXiv::App.controllers :maker_actions do
   end
 
   get :edit, map: '/maker_actions/:id/edit' do
-    @maker_action = session['maker_action'] || get_or_404(MakerAction, params.fetch('id').to_i)
+    @maker_action = session['maker_action'] || 
+      get_or_404(MakerAction, params.fetch('id').to_i)
     session.delete 'maker_action'
 
     render 'edit'
@@ -83,7 +85,8 @@ LouisXiv::App.controllers :maker_actions do
 
         if maker_action.valid?
           maker_action.save
-          redirect(url(:maker_actions, :show, id: maker_action.id), success: "Modified '#{ maker_action.name }'")
+          redirect(url(:maker_actions, :show, id: maker_action.id), 
+                       success: "Modified '#{ maker_action.name }'")
         end
 
         # Action not valid due to missing name etc
@@ -97,7 +100,8 @@ LouisXiv::App.controllers :maker_actions do
 
     # @Todo: Marshal
     session['maker_action'] = maker_action
-    redirect(url(:maker_actions, :edit, id: maker_action.id), form_error: errors)
+    redirect(url(:maker_actions, :edit, id: maker_action.id), 
+             form_error: errors)
   end
 
   post :delete, map: '/maker_actions/:id/delete' do
