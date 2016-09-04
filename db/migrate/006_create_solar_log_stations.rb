@@ -11,7 +11,21 @@ Sequel.migration do
       DateTime :updated_at
     end
 
-    create_join_table(:solar_log_station_id => :solar_log_stations, :solar_log_trigger_id => :solar_log_triggers)
+    create_table :solar_log_stations_solar_log_triggers do
+      primary_key :id
+
+      foreign_key :solar_log_station_id, :solar_log_stations, null: false
+      foreign_key :solar_log_trigger_id, :solar_log_triggers, null: false
+
+      # Default index name would be too long for MySQL, which imposes a 64-char 
+      # limit on identifiers.
+      index [:solar_log_station_id, :solar_log_trigger_id],
+            unique: true,
+            name: 'solar_log_stations_triggers_station_trigger'
+      index [:solar_log_trigger_id, :solar_log_station_id],
+            unique: true,
+            name: 'solar_log-stations_triggers_trigger_station'
+    end
   end
 
 
