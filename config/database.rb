@@ -10,12 +10,22 @@ Sequel::Model.plugin :timestamps
 
 Sequel::Model.raise_on_save_failure = true
 
+db_con  = ENV.fetch('DB_CON', "sqlite://db/louis_xiv_#{ Padrino.env }.db")
+db_user = ENV['DB_USER']
+db_pass = ENV['DB_PASS']
+
+opts = { loggers: [logger] }
+if db_user && db_pass
+  opts[:user] = db_user
+  opts[:password] = db_pass
+end
+
 Sequel::Model.db = 
   case Padrino.env
   when :development then
-    Sequel.connect('sqlite://db/louis_xiv_development.db', loggers: [logger])
+    Sequel.connect(db_con, opts)
   when :production  then
-    Sequel.connect('sqlite://db/louis_xiv_production.db',  loggers: [logger])
+    Sequel.connect(db_con, opts)
   when :test        then
-    Sequel.connect('sqlite://db/louis_xiv_test.db',        loggers: [logger])
+    Sequel.connect(db_con, opts)
   end
