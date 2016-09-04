@@ -1,3 +1,4 @@
-padrino_env   = ENV['PADRINO_ENV'] ||= ENV['RACK_ENV'] ||= 'development'
-resque_config = YAML.load_file Padrino.root('config', 'resque.yml')
-Resque.redis  = resque_config[padrino_env]
+redis_host = ENV.fetch('REDIS_HOST', 'localhost')
+redis_port = ENV.fetch('REDIS_PORT', 6379)
+
+Resque.redis  = "#{ redis_host }:#{ redis_port }"
