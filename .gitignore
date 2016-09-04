@@ -8,3 +8,5 @@ db/*.db
 db/seeds.private.rb
 .*.sw*
 bin/
+# File with env variables for docker
+docker.env
