@@ -22,6 +22,9 @@ gem 'sequel'
 
 gem 'padrino', '0.13.3'
 
+# Application server
+gem 'unicorn'
+
 # Background processes
 gem 'resque'
 gem 'resque-scheduler'
@@ -30,6 +33,13 @@ gem 'resque-scheduler'
 gem 'dentaku'
 # Sane HTTP
 gem 'httparty'
+
+# No way to know which DB the user will use. And due to Docker-based 
+# setups, there's no sensible way to have the user install those he needs.
+gem 'mysql2'
+gem 'pg'
+gem 'sequel_pg', require: 'sequel'
+gem 'sqlite3'
 
 # SolarLog API client
 gem 'sunscout'
@@ -42,6 +52,5 @@ group :test do
 end
 
 group :development do
-  gem 'sqlite3'
   gem 'pry'
 end
