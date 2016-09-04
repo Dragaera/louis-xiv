@@ -16,6 +16,8 @@
 - Data history (graphs)
 - Maker event parameters
 - Logging of actions taken / triggers checked
+- Time/Date in trigger conditions
+- MyStrom Wifi Switch support
 
 # Dev
 - E2E specs
