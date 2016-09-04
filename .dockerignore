@@ -1,0 +1,13 @@
+# Git
+.git/
+
+# SQLite DBs
+db/*.db
+# Dev seed data
+db/seeds.private.rb
+
+# Logfiles
+log/*
+
+# CTags
+tags
