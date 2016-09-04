@@ -20,7 +20,7 @@ class MakerAction < Sequel::Model
   many_to_many :maker_keys,         delay_pks: true
   many_to_many :solar_log_triggers,
                delay_pks:  true,
-               join_table: :solar_log_triggers_actions
+               join_table: :solar_log_triggers_maker_actions
 
   def active_maker_keys
     maker_keys_dataset.where(active: true).to_a

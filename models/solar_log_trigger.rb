@@ -15,7 +15,7 @@ class SolarLogTrigger < Sequel::Model
 
   many_to_many :maker_actions,
                delay_pks:   true,
-               join_table:  :solar_log_triggers_actions
+               join_table:  :solar_log_triggers_maker_actions
 
   many_to_many :solar_log_stations, delay_pks: true
 
