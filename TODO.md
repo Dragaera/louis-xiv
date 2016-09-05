@@ -1,21 +1,39 @@
 # Todo
 
-## Ops
-- Cleanup of historical data
-- Config file
-
 # Feature
-- Schedule interval of station update
-- Expirable actions
+- Access to hosts behind NAT/FW with Net::SSH::Gateway
+- Time/Date in trigger conditions
+- Logging of actions taken / triggers checked
+
+- SolarLog: Schedule interval of station update
+- SolarLog: Data history (graphs)
+
+- MyStrom: Wifi Switch support
+
+- IFTTT: Maker event parameters
+
+- Actions: Follow-up
+  - 'Trigger immediately'
+  - 'Trigger x in y minutes'
+  - 'Trigger x after y invocations of z'
+
+- Actions: Expire
   - One-Off
   - Count
   - Date
-- Data history (graphs)
-- Maker event parameters
-- Logging of actions taken / triggers checked
-- Time/Date in trigger conditions
-- MyStrom Wifi Switch support
-- Access to hosts behind NAT/FW with Net::SSH::Gateway
+
+- Actions: Interaction
+  - Enable/Disable key, event, action, trigger, ...
+
+- User management
+  - Stations / triggers / keys / ... owned by users
+  - Access levels
+
+## Ops
+- Cleanup of historical data
+- Configuration: More extensive (sensible defaults!)
+  - Timezone
+- Setup documentation
 
 # Dev
 - E2E specs
