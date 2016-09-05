@@ -10,7 +10,6 @@ Sequel::Model.plugin :timestamps
 
 Sequel::Model.raise_on_save_failure = true
 
-db_con  = ENV.fetch('DB_CON', "sqlite://db/louis_xiv_#{ Padrino.env }.db")
 db_adapter  = ENV.fetch('DB_ADAPTER', 'sqlite')
 db_host     = ENV['DB_HOST']
 db_database = ENV.fetch('DB_DATABASE', "db/louis_xiv_#{ Padrino.env }.db")
