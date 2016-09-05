@@ -42,12 +42,12 @@ LouisXiv::App.controllers :solar_log_triggers do
         errors += pp_form_errors(solar_log_trigger.errors)
       end
     rescue Sequel::DatabaseError
-      # @Todo: Logging
+      # TODO: Logging
       # Saving trigger failed (e.g. referential integrity of fk to maker actions)
       errors += ['Could not create SolarLog trigger']
     end
 
-    # @Todo: Marshal
+    # TODO: Marshal
     session['solar_log_trigger'] = solar_log_trigger
     redirect(url(:solar_log_triggers, :new), form_error: errors)
   end
@@ -97,12 +97,12 @@ LouisXiv::App.controllers :solar_log_triggers do
         errors += pp_form_errors(solar_log_trigger.errors)
       end
     rescue Sequel::DatabaseError
-      # @Todo: Logging
+      # TODO: Logging
       # Saving trigger failed (e.g. ref integrity maker action fk)
       errors += ["Could not modify '#{ solar_log_trigger.name }'"]
     end
 
-    # @Todo: Marshal
+    # TODO: Marshal
     session['solar_log_trigger'] = solar_log_trigger
     redirect(url(:solar_log_triggers, :edit, id: solar_log_trigger.id), 
              form_error: errors)

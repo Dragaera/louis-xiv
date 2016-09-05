@@ -25,7 +25,7 @@ LouisXiv::App.controllers :solar_log_stations do
       redirect(url(:solar_log_stations, :index), 
                success: "Created SolarLog station '#{ solar_log_station.name }'")
     else
-      # @Todo: Marshal
+      # TODO: Marshal
       session['solar_log_station'] = solar_log_station
       redirect(url(:solar_log_stations, :new), 
                form_error: pp_form_errors(solar_log_station.errors))
@@ -59,7 +59,7 @@ LouisXiv::App.controllers :solar_log_stations do
       solar_log_station.save
       redirect(url(:solar_log_stations, :show, id: solar_log_station.id))
     else
-      # @Todo: Marshal
+      # TODO: Marshal
       session['solar_log_station'] = solar_log_station
       redirect(url(:solar_log_stations, :edit, id: solar_log_station.id), 
                form_error: pp_form_errors(solar_log_station.errors))

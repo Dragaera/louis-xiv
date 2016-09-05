@@ -26,7 +26,7 @@ FactoryGirl.define do
         inactive_maker_keys_count 0
       end
 
-      # @TODO: Should be able to do this with create_list
+      # TODO: Should be able to do this with create_list
       # However, need to teach it how to associate keys with actions.
       after(:create) do |action, evaluator|
         evaluator.maker_keys_count.times do
@@ -47,7 +47,7 @@ FactoryGirl.define do
         inactive_maker_events_count 0
       end
 
-      # @TODO: Should be able to do this with create_list
+      # TODO: Should be able to do this with create_list
       # However, need to teach it how to associate keys with actions.
       after(:create) do |action, evaluator|
         evaluator.maker_events_count.times do

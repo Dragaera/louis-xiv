@@ -19,7 +19,7 @@ LouisXiv::App.controllers :maker_keys do
       redirect(url(:maker_keys, :index), 
                success: "Created Maker key #{ maker_key.name }")
     else
-      # @Todo: Marshal: Avoid full objects in session
+      # TODO: Marshal: Avoid full objects in session
       session['maker_key'] = maker_key
       redirect(url(:maker_keys, :new), 
                form_error: pp_form_errors(maker_key.errors))
@@ -52,7 +52,7 @@ LouisXiv::App.controllers :maker_keys do
       redirect(url(:maker_keys, :show, id: maker_key.id), 
                success: "Modified #{ maker_key.name }")
     else
-      # @Todo: Marshal: avoid full objects in session
+      # TODO: Marshal: avoid full objects in session
       session['maker_key'] = maker_key
       redirect(url(:maker_keys, :edit, id: maker_key.id), 
                form_error: pp_form_errors(maker_key.errors))

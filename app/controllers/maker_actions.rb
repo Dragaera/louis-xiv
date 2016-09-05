@@ -12,7 +12,7 @@ LouisXiv::App.controllers :maker_actions do
   end
 
   post :new do
-    # @Todo: refactor
+    # TODO: refactor
 
     obj_params = params.fetch('maker_action')
     maker_action = MakerAction.new(
@@ -40,12 +40,12 @@ LouisXiv::App.controllers :maker_actions do
         errors += pp_form_errors(maker_action.errors)
       end
     rescue Sequel::DatabaseError
-      # @Todo: Logging
+      # TODO: Logging
       # Saving action failed because of non-existant key or event
       errors += ['Could not create maker action']
     end
 
-    # @Todo: Marshal
+    # TODO: Marshal
     session['maker_action'] = maker_action
     redirect(url(:maker_actions, :new), form_error: errors)
   end
@@ -92,12 +92,12 @@ LouisXiv::App.controllers :maker_actions do
         errors += pp_form_errors(maker_action.errors)
       end
     rescue Sequel::DatabaseError
-      # @Todo: Logging
+      # TODO: Logging
       # Saving action failed because of non-existant key or event
       errors += ["Could not modify #{ maker_action.name }"]
     end
 
-    # @Todo: Marshal
+    # TODO: Marshal
     session['maker_action'] = maker_action
     redirect(url(:maker_actions, :edit, id: maker_action.id), 
              form_error: errors)

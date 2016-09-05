@@ -19,7 +19,7 @@ LouisXiv::App.controllers :maker_events do
       redirect(url(:maker_events, :index), 
                success: "Created Maker event #{ maker_event.name }")
     else
-      # @Todo: Marshal
+      # TODO: Marshal
       session['maker_event'] = maker_event
       redirect(url(:maker_events, :new), 
                form_error: pp_form_errors(maker_event.errors))
@@ -53,7 +53,7 @@ LouisXiv::App.controllers :maker_events do
       redirect(url(:maker_events, :show, id: maker_event.id), 
                success: "Modified #{ maker_event.name }")
     else
-      # @Todo: Marshal
+      # TODO: Marshal
       session['maker_event'] = maker_event
       redirect(url(:maker_events, :edit, id: maker_event.id), 
                form_error: pp_form_errors(maker_event.errors))

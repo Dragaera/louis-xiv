@@ -24,7 +24,7 @@ module Tasks
       uri = format(URI, event.event, key.key)
       logger.debug "POSTing to #{ uri }"
 
-      # @Todo: Error handling / logging
+      # TODO: Error handling / logging
       response = HTTParty.post(uri)
       logger.debug "Response code: #{ response.code }"
       logger.debug "Response body: #{ response.body }"

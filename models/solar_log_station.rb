@@ -17,7 +17,7 @@ class SolarLogStation < Sequel::Model
   one_to_many  :solar_log_data_points
 
   def data_point
-    # @Todo: Might be better to keep an FK pointing at most recent data point
+    # TODO: Might be better to keep an FK pointing at most recent data point
     solar_log_data_points_dataset.order(Sequel.desc(:id)).first
   end
 
@@ -29,7 +29,7 @@ class SolarLogStation < Sequel::Model
   def update_data
     logger.info "Updating data of station '#{ name }'"
 
-    # @Todo: Timezone should come from SolarLogStation
+    # TODO: Timezone should come from SolarLogStation
     s = Sunscout::SolarLog::SolarLog.new(http_url, timezone: '+0200')
     data_point = SolarLogDataPoint.new(
       power_ac:        s.power_ac,
