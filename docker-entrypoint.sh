@@ -25,28 +25,28 @@ echo "Rack env: '$RACK_ENV'"
 case "$1" in
     application)
         echo "Starting application server..."
-        unicorn
+        exec unicorn
         ;;
     worker)
         echo "Starting worker..."
         echo "Listening to queues: '$QUEUE'"
         echo "Polling interval: $INTERVAL"
-        rake resque:work
+        exec rake resque:work
         ;;
     scheduler)
         echo "Starting scheduler..."
         echo "Scheduling interval: $RESQUE_SCHEDULER_INTERVAL"
-        rake resque:scheduler
+        exec rake resque:scheduler
         ;;
     init)
         # Useful for running a dev-style docker container, 
         # with a SQLite DB *inside* the container.
         echo "Initializing database"
-        rake sq:create
+        exec rake sq:create
         ;;
     migrate)
         echo "Applying database migrations"
-        rake sq:migrate
+        exec rake sq:migrate
         ;;
 
     *)
