@@ -16,7 +16,7 @@ Sequel.migration do
       primary_key :id
 
       foreign_key :solar_log_trigger_id, :solar_log_triggers, null: false
-      foreign_key :maker_action_id,      :maker_actions,      null: true
+      foreign_key :maker_action_id,      :maker_actions,      null: false
 
       # Default index name would be too long for MySQL, which imposes a 64-char 
       # limit on identifiers.
