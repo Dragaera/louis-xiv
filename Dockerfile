@@ -2,6 +2,10 @@ FROM ruby:2.3.1-onbuild
 
 MAINTAINER Michael Senn <michael@morrolan.ch>
 
+# True for application server, but worker and scheduler don't actually expose
+# any ports. :/
+EXPOSE 8080
+
 RUN chmod +x "./docker-entrypoint.sh"
 
 # Tiny Init. (Reap zombies, forward signals)
