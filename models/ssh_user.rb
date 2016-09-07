@@ -15,4 +15,14 @@ class SSHUser < Sequel::Model
   end
 
   one_to_many :ssh_gateways, delay_pks: true, class: :SSHGateway
+
+  def authentication_method
+    if private_key && !private_key.empty?
+      :private_key
+    elsif password && !password.empty?
+      :passphrase
+    else
+      :none
+    end
+  end
 end

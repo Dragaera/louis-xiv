@@ -32,4 +32,21 @@ RSpec.describe SSHUser do
       expect(user).to be_valid
     end
   end
+
+  describe '#authentication_method' do
+    it 'should return :passphrase if only a passphrase is set' do
+      user = create(:ssh_user, private_key: nil)
+      expect(user.authentication_method).to eq :passphrase
+    end
+
+    it 'should return :private_key if only a private key is set' do
+      user = create(:ssh_user, password: nil)
+      expect(user.authentication_method).to eq :private_key
+    end
+
+    it 'should return :private_key if both are set' do
+      user = create(:ssh_user)
+      expect(user.authentication_method).to eq :private_key
+    end
+  end
 end
