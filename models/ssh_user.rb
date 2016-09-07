@@ -1,6 +1,10 @@
 class SSHUser < Sequel::Model
   plugin :validation_helpers
 
+  def before_validation
+    self.name = user if name.nil? || name.empty?
+  end
+
   def validate
     validates_presence [:user]
 

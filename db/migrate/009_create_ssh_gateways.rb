@@ -4,6 +4,7 @@ Sequel.migration do
       primary_key :id
       foreign_key :ssh_user_id, :ssh_users, null: false
 
+      String   :name
       String   :host,   null: false
       Bool     :active, null: false, default: true
       DateTime :used_at

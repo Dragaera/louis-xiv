@@ -3,6 +3,7 @@ Sequel.migration do
     create_table :ssh_users do
       primary_key :id
       Bool   :active,     null: false, default: true
+      String :name
       String :user,       null: false
       String :password
       String :private_key
