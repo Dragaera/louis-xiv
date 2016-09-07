@@ -15,6 +15,7 @@ class SolarLogStation < Sequel::Model
 
   many_to_many :solar_log_triggers, delay_pks: true
   one_to_many  :solar_log_data_points
+  many_to_one  :ssh_gateway,        delay_pks: true, class: :SSHGateway
 
   def data_point
     # TODO: Might be better to keep an FK pointing at most recent data point

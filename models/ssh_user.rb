@@ -13,4 +13,6 @@ class SSHUser < Sequel::Model
       errors.add(:private_key, 'or password must be defined')
     end
   end
+
+  one_to_many :ssh_gateways, delay_pks: true, class: :SSHGateway
 end
