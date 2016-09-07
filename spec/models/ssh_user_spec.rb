@@ -1,0 +1,35 @@
+require 'spec_helper'
+
+RSpec.describe SSHUser do
+  let(:user_john) { create(:ssh_user, user: 'John', password: 'beelzebeub') }
+
+  describe '#save' do
+    it 'should set the default value of #active' do
+      expect(user_john).to be_active
+    end
+  end
+
+  describe '#valid?' do
+    it 'should validate presence of #user' do
+      user = build(:ssh_user, user: nil, password: 'nope')
+      expect(user).to_not be_valid
+
+      user = build(:ssh_user, user: 'test', password: 'yes')
+      expect(user).to be_valid
+    end
+
+    it 'should validate presence of either #password or #private_key' do
+      user = build(:ssh_user, password: nil, private_key: nil)
+      expect(user).to_not be_valid
+
+      user = build(:ssh_user, password: 'testing testing 123', private_key: nil)
+      expect(user).to be_valid
+
+      user = build(:ssh_user, private_key: 'BEGIN RSA', password: nil)
+      expect(user).to be_valid
+
+      user = build(:ssh_user, password: 'sekkrit', private_key: 'BEGIN RSA')
+      expect(user).to be_valid
+    end
+  end
+end

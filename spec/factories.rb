@@ -106,4 +106,10 @@ FactoryGirl.define do
     sequence(:name) { |i| "SolarLog Station #{ i }" }
     sequence(:http_url) { |i| "http://solarlog-#{ i }.local" }
   end
+
+  factory :ssh_user, class: SSHUser do
+    sequence(:user) { |i| "ssh_user_#{ i }" }
+    sequence(:password) { |i| "ssh_pass_#{ i }" }
+    sequence(:private_key) { |i| "ssh_private_key_#{ i }" }
+  end
 end
