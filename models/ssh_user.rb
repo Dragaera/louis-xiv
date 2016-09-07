@@ -20,6 +20,11 @@ class SSHUser < Sequel::Model
 
   one_to_many :ssh_gateways, delay_pks: true, class: :SSHGateway
 
+  def private_key=(v)
+    # Get rid of newlines, concatenate as one big string.
+    super(v.lines.map(&:chomp).join(''))
+  end
+
   def authentication_method
     if private_key && !private_key.empty?
       :private_key
