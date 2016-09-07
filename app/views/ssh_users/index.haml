@@ -1,0 +1,31 @@
+.page-header
+  %h1
+    SSH
+    %small User
+
+%a{ href: url(:ssh_users, :new) }
+  %span.glyphicon.glyphicon-plus
+
+%table.table
+  %thead
+    %tr
+      %th User
+      %th Authentication method
+      %th Active
+
+  %tbody
+    - @ssh_users.each do |user|
+      %tr
+        %td= link_to "#{ user.name }", url(:ssh_users, :show, id: user.id)
+        %td
+          - if user.authentication_method == :passphrase
+            Passphrase
+          - elsif user.authentication_method == :private_key
+            Private Key
+          - else
+            (None)
+        %td
+          - if user.active
+            %span.glyphicon.glyphicon-ok
+          - else
+            %span.glyphicon.glyphicon-remove

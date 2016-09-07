@@ -1,0 +1,46 @@
+- if type == :new
+  - back_link = url(:ssh_users, :index)
+  - action = 'create'
+  - submit_caption = 'Create'
+- elsif type == :edit
+  - back_link = url(:ssh_users, :show, id: @ssh_user.id)
+  - action = 'edit'
+  - submit_caption = 'Edit'
+
+= form_for @ssh_user, target_url do |f|
+  - if flash[:form_error]
+    = partial 'form_errors', locals: { form_errors: flash[:form_error], action: action }
+
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :user
+    = f.text_field :user, class: 'form-control', required: true
+
+  .form-group
+    = f.label :password
+    = f.password_field :password, class: 'form-control'
+
+  .form-group
+    = f.label :private_key
+    = f.text_area :private_key, class: 'form-control'
+
+    %span.help-block
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title Private Key or Passphrase?
+        .panel-body
+          Instead of an SSH passphrase you can also use key-based
+          authentication.  Please use a dedicated key and user, though - do not
+          reuse one of your personal SSH keys!
+
+  .checkbox
+    %label
+      = f.check_box :active
+      Active
+
+  = f.submit submit_caption, class: 'btn btn-default'
+
+  = link_to 'Cancel', back_link, class: 'btn btn-link'
