@@ -75,6 +75,14 @@ class SolarLogStation < Sequel::Model
     raise
   end
 
+  def connection_mode
+    if ssh_gateway
+      :ssh_gateway
+    else
+      :direct
+    end
+  end
+
   def calculator
     if data_point.nil?
       raise ArgumentError, "Station '#{ name }' has no data points"
