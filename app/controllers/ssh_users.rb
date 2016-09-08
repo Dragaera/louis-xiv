@@ -67,6 +67,13 @@ LouisXiv::App.controllers :ssh_users do
   post :delete, map: '/ssh_users/:id/delete' do
     ssh_user = get_or_404(SSHUser, params.fetch('id').to_i)
 
+    if ssh_user.ssh_gateways.count > 0
+      gws = ssh_user.ssh_gateways
+      error_msg = "SSH user is used for #{ gws.count } gateways! (#{ gws.map(&:name).join(', ') })"
+      redirect(url(:ssh_users, :show, id: ssh_user.id),
+               error: error_msg)
+    end
+
     ssh_user.destroy
     redirect(url(:ssh_users, :index))
   end
