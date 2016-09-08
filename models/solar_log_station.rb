@@ -31,7 +31,12 @@ class SolarLogStation < Sequel::Model
     logger.info "Updating data of station '#{ name }'"
 
     # TODO: Timezone should come from SolarLogStation
-    s = Sunscout::SolarLog::SolarLog.new(http_url, timezone: '+0200')
+    opts = { timezone: '+0200' }
+    if ssh_gateway
+      logger.info "Tunneling request via gateway '#{ ssh_gateway.name }'"
+      opts[:ssh_gateway] = ssh_gateway.ssh_gateway
+    end
+    s = Sunscout::SolarLog::SolarLog.new(http_url, opts)
     data_point = SolarLogDataPoint.new(
       power_ac:        s.power_ac,
       power_dc:        s.power_dc,
