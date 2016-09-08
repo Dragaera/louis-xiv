@@ -16,7 +16,11 @@
   %tbody
     - @solar_log_stations.each do |station|
       %tr
-        %td= link_to "#{ station.name } (#{ truncate(station.http_url, length: 30) })", url(:solar_log_stations, :show, id: station.id)
+        - if station.connection_mode == :direct
+          - connection_mode = 'Direct'
+        - elsif station.connection_mode == :ssh_gateway
+          - connection_mode = 'SSH Gateway'
+        %td= link_to "#{ station.name } (#{ truncate(station.http_url, length: 30) }) [#{ connection_mode }]", url(:solar_log_stations, :show, id: station.id)
         %td= pretty_print_date(station.checked_at, ago: true, alt: '(never)')
         %td
           - if station.active
