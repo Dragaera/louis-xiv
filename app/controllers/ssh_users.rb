@@ -13,16 +13,10 @@ LouisXiv::App.controllers :ssh_users do
 
   post :new do
     obj_params = params.fetch('ssh_user')
-    ssh_user = SSHUser.new(
-      name:        obj_params.fetch('name'),
-      user:        obj_params.fetch('user'),
-      active:      to_bool(obj_params.fetch('active')),
-      password:    obj_params.fetch('password', ''),
-      private_key: obj_params.fetch('private_key', '')
-    )
-    # Ensure we have proper NULL values in the DB.
-    ssh_user.password    = nil if ssh_user.password.empty?
-    ssh_user.private_key = nil if ssh_user.private_key.empty?
+    if obj_params.key? 'active'
+      obj_params['active'] = to_bool(obj_params['active'])
+    end
+    ssh_user = SSHUser.new(obj_params)
 
     if ssh_user.valid?
       ssh_user.save

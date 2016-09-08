@@ -49,4 +49,26 @@ RSpec.describe SSHUser do
       expect(user.authentication_method).to eq :private_key
     end
   end
+
+  describe '#password=' do
+    it 'should remap the empty string to nil' do
+      user = create(:ssh_user)
+      user.password = ''
+      expect(user.password).to be_nil
+    end
+  end
+
+  describe '#private_key=' do
+    it 'should remap the empty string to nil' do
+      user = create(:ssh_user)
+      user.private_key = ''
+      expect(user.private_key).to be_nil
+    end
+
+    it 'should remove linebreaks' do
+      user = create(:ssh_user)
+      user.private_key = "===RSA PRIVATE KEY===\nabcdefgh\n===END RSA==="
+      expect(user.private_key).to eq '===RSA PRIVATE KEY===abcdefgh===END RSA==='
+    end
+  end
 end

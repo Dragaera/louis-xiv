@@ -20,9 +20,21 @@ class SSHUser < Sequel::Model
 
   one_to_many :ssh_gateways, delay_pks: true, class: :SSHGateway
 
+  def password=(v)
+    if v.nil? || v.empty?
+      super(nil)
+    else
+      super(v)
+    end
+  end
+
   def private_key=(v)
-    # Get rid of newlines, concatenate as one big string.
-    super(v.lines.map(&:chomp).join(''))
+    if v.nil?  || v.empty?
+      super(nil)
+    else
+      # Get rid of newlines, concatenate as one big string.
+      super(v.lines.map(&:chomp).join(''))
+    end
   end
 
   def authentication_method
