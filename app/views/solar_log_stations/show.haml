@@ -40,7 +40,7 @@
             - if @solar_log_station.connection_mode == :direct
               Direct Connection
             - elsif @solar_log_station.connection_mode == :ssh_gateway
-              = "SSH Gateway: #{ @solar_log_station.ssh_gateway.name }"
+              = link_to "SSH Gateway: #{ @solar_log_station.ssh_gateway.name }", url(:ssh_gateways, :show, @solar_log_station.ssh_gateway.id)
         %tr
           %td Checked at
           %td= pretty_print_date(@solar_log_station.checked_at, ago: true, alt: '(never)')
