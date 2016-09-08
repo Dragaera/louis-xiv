@@ -46,7 +46,7 @@ gem 'sequel_pg', require: 'sequel'
 gem 'sqlite3'
 
 # SolarLog API client
-gem 'sunscout'
+gem 'sunscout', '0.3'
 
 group :test do
   gem 'rspec'
