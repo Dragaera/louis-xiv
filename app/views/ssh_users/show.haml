@@ -51,4 +51,4 @@
     %h2 Used in SSH Gateways
     .list-group
       - @ssh_user.ssh_gateways.each do |gw|
-        = link_to(gw.host, url(:ssh_gateways, :show, id: gw.id), class: 'list-group-item')
+        = link_to("#{ gw.name } (#{ gw.host })", url(:ssh_gateways, :show, id: gw.id), class: 'list-group-item')
