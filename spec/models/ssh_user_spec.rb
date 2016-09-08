@@ -65,10 +65,11 @@ RSpec.describe SSHUser do
       expect(user.private_key).to be_nil
     end
 
-    it 'should remove linebreaks' do
+    it 'should preserve linebreaks' do
       user = create(:ssh_user)
       user.private_key = "===RSA PRIVATE KEY===\nabcdefgh\n===END RSA==="
-      expect(user.private_key).to eq '===RSA PRIVATE KEY===abcdefgh===END RSA==='
+      user.save
+      expect(user.private_key).to eq "===RSA PRIVATE KEY===\nabcdefgh\n===END RSA==="
     end
   end
 end

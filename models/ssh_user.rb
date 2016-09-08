@@ -32,8 +32,7 @@ class SSHUser < Sequel::Model
     if v.nil?  || v.empty?
       super(nil)
     else
-      # Get rid of newlines, concatenate as one big string.
-      super(v.lines.map(&:chomp).join(''))
+      super(v)
     end
   end
 
