@@ -21,7 +21,7 @@
 
   .form-group
     = f.label :ssh_gateway
-    %select.form-control{ name: 'solar_log_station[ssh_gateway]' }
+    %select.form-control.select2{ name: 'solar_log_station[ssh_gateway]' }
       - if @solar_log_station.ssh_gateway
         %option{ value: '' } (Direct connection)
       - else
