@@ -34,6 +34,10 @@ gem 'dentaku'
 # Sane HTTP
 gem 'httparty'
 
+# SSH incl using it as a gateway
+gem 'net-ssh'
+gem 'net-ssh-gateway'
+
 # No way to know which DB the user will use. And due to Docker-based 
 # setups, there's no sensible way to have the user install those he needs.
 gem 'mysql2'
