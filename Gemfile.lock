@@ -156,6 +156,7 @@ DEPENDENCIES
   sequel_pg
   sqlite3
   sunscout (= 0.3)
+  tzinfo
   unicorn
 
 BUNDLED WITH
