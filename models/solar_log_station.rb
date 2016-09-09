@@ -67,7 +67,12 @@ class SolarLogStation < Sequel::Model
       timestamp: s.time
     )
     add_solar_log_data_point(data_point)
-    update(checked_at: DateTime.now)
+    now = DateTime.now
+    update(checked_at: now)
+    if ssh_gateway
+      ssh_gateway.update(used_at: now)
+      ssh_gateway.ssh_user.update(used_at: now)
+    end
 
     logger.info 'Successfully updated data'
 
