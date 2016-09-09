@@ -49,7 +49,7 @@ gem 'sqlite3'
 gem 'tzinfo'
 
 # SolarLog API client
-gem 'sunscout', '0.3'
+gem 'sunscout', '~> 0.3.1'
 
 group :test do
   gem 'rspec'
