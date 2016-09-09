@@ -10,11 +10,26 @@ Sequel::Model.plugin :timestamps
 
 Sequel::Model.raise_on_save_failure = true
 
-# Store times in database as UTC - only sensible choice, as not all engines
-# support types with timezone indiciators.
-Sequel.database_timezone = :utc
-# Whereas the application will want local stamps
-Sequel.application_timezone = :local
+Sequel.extension :named_timezones
+
+timezone_db          = ENV.fetch('TIMEZONE_DATABASE', 'UTC')
+timezone_application = ENV.fetch('TIMEZONE_APPLICATION', 'UTC')
+timezone_typecast    = ENV.fetch('TIMEZONE_TYPECAST', timezone_application)
+
+# Catching TZInfo::InvalidTimezoneIdentifier / Logging & Reraising leads to the
+# exception being hidden behind a "No DB assigned to Sequel::Model", so we'll
+# just let it bubble up.
+tz_db   = TZInfo::Timezone.get(timezone_db)
+tz_app  = TZInfo::Timezone.get(timezone_application)
+tz_cast = TZInfo::Timezone.get(timezone_typecast)
+
+logger.info "Database timezone: #{ tz_db }"
+logger.info "Application timezone: #{ tz_app }"
+logger.info "Typecast timezone: #{ tz_cast }"
+
+Sequel.database_timezone    = tz_db
+Sequel.application_timezone = tz_app
+Sequel.typecast_timezone    = tz_cast
 
 db_adapter  = ENV.fetch('DB_ADAPTER', 'sqlite')
 db_host     = ENV['DB_HOST']

@@ -21,4 +21,16 @@ RSpec.describe 'LouisXiv::App::DateTimeHelper' do
       expect(subject.pretty_print_date(nil, alt: '(never)')).to eq '(never)'
     end
   end
+
+  describe '#seconds_as_offset' do
+    it 'should return the input seconds as an [+-]HHMM-formatted offset' do
+      expect(subject.seconds_to_offset(60)).to eq '+0001'
+      expect(subject.seconds_to_offset(7200)).to eq '+0200'
+      expect(subject.seconds_to_offset(3660)).to eq '+0101'
+    end
+
+    it 'should handle negative offsets' do
+      expect(subject.seconds_to_offset(-4020)).to eq '-0107'
+    end
+  end
 end

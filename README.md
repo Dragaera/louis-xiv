@@ -38,6 +38,35 @@ are shown, etc. Supported options:
 Note: Strictly speaking, RACK_ENV influences **Rack**'s setup. However, Padrino
 (and other tools) derive their default environment from it.
 
+#### TIMEZONE_APPLICATION
+
+*Default: UTC*
+
+Timezone which timestamps will be converted to when loaded from the database.
+This is essentially the timezone you will see in the application's frontend.
+
+It is advisable to set this to your local timezone - e.g. `Europe/London`.
+
+#### TIMEZONE_TYPECAST
+
+*Default: TIMEZONE_APPLICATION*
+
+Timezone which unmarked timestamps will be assumed to be in. This might be the
+case for user-input times.
+
+It is advisable to use the same value as for `TIMEZONE_APPLICATION` in order
+not to lead to unexpected results - the default value will do just that.
+
+#### TIMEZONE_DATABASE
+
+*Default: UTC*
+
+Timezone which to use for storing timestamps in the database. Also defines
+which timezone timestamps stored in the database are assumed to be in, unless
+they specify otherwise.
+
+Do not change, unless you are certain.
+
 ### Database
 
 #### DB_ADAPTER 

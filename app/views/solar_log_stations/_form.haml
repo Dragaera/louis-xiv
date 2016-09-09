@@ -20,6 +20,15 @@
     = f.url_field :http_url, class: 'form-control', required: true
 
   .form-group
+    = f.label :timezone
+    %select.form-control.select2{ name: 'solar_log_station[timezone]' }
+      - TZInfo::Timezone.all.each do |tz|
+        - if tz.identifier == @solar_log_station.timezone
+          %option{ value: tz.identifier, selected: 'selected' }= tz.friendly_identifier
+        - else
+          %option{ value: tz.identifier }= tz.friendly_identifier
+
+  .form-group
     = f.label :ssh_gateway
     %select.form-control.select2{ name: 'solar_log_station[ssh_gateway]' }
       - if @solar_log_station.ssh_gateway

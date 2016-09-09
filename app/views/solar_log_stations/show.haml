@@ -35,6 +35,9 @@
           %td HTTP URL
           %td= link_to @solar_log_station.http_url, @solar_log_station.http_url
         %tr
+          %td Timezone
+          %td= @solar_log_station.timezone
+        %tr
           %td Connection Mode
           %td
             - if @solar_log_station.connection_mode == :direct

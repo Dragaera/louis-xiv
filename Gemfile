@@ -45,8 +45,11 @@ gem 'pg'
 gem 'sequel_pg', require: 'sequel'
 gem 'sqlite3'
 
+# For Sequel's named_timezone extension.
+gem 'tzinfo'
+
 # SolarLog API client
-gem 'sunscout', '0.3'
+gem 'sunscout', '~> 0.3.1'
 
 group :test do
   gem 'rspec'

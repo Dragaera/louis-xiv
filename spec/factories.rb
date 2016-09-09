@@ -105,6 +105,7 @@ FactoryGirl.define do
   factory :solar_log_station do
     sequence(:name) { |i| "SolarLog Station #{ i }" }
     sequence(:http_url) { |i| "http://solarlog-#{ i }.local" }
+    timezone 'UTC'
   end
 
   factory :ssh_user, class: SSHUser do

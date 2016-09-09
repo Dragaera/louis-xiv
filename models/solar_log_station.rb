@@ -1,4 +1,9 @@
+# TODO: Not sure if this (& include below) are really proper.
+require_relative '../app/helpers/date_time_helper'
+
 class SolarLogStation < Sequel::Model
+  include LouisXiv::App::DateTimeHelper
+
   def self.active
     SolarLogStation.where(active: true)
   end
@@ -11,6 +16,12 @@ class SolarLogStation < Sequel::Model
 
   def validate
     validates_presence [:name, :http_url]
+
+    begin
+      TZInfo::Timezone.get(timezone)
+    rescue TZInfo::InvalidTimezoneIdentifier
+      errors.add(:timezone, 'Invalid timezone identifier')
+    end
   end
 
   many_to_many :solar_log_triggers, delay_pks: true
@@ -30,8 +41,10 @@ class SolarLogStation < Sequel::Model
   def update_data
     logger.info "Updating data of station '#{ name }'"
 
-    # TODO: Timezone should come from SolarLogStation
-    opts = { timezone: '+0200' }
+    tz = TZInfo::Timezone.get(timezone)
+    # Offset including DST, if applicable.
+    offset_in_s = tz.current_period.utc_total_offset
+    opts = { timezone: seconds_to_offset(offset_in_s) }
     if ssh_gateway
       logger.info "Tunneling request via gateway '#{ ssh_gateway.name }'"
       opts[:ssh_gateway] = ssh_gateway.ssh_gateway
