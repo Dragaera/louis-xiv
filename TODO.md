@@ -32,7 +32,6 @@
 ## Ops
 - Cleanup of historical data
 - Configuration: More extensive (sensible defaults!)
-  - Timezone
 - Setup documentation
 
 # Dev
