@@ -1,0 +1,38 @@
+- if type == :new
+  - back_link = url(:ssh_gateways, :index)
+  - action = 'create'
+  - submit_caption = 'Create'
+- elsif type == :edit
+  - back_link = url(:ssh_gateways, :show, id: @ssh_gateway.id)
+  - action = 'edit'
+  - submit_caption = 'Edit'
+
+= form_for @ssh_gateway, target_url do |f|
+  - if flash[:form_error]
+    = partial 'form_errors', locals: { form_errors: flash[:form_error], action: action }
+
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :host
+    = f.text_field :host, class: 'form-control', required: true
+
+  .form-group
+    = f.label :ssh_user
+    %select.form-control.select2{ name: 'ssh_gateway[ssh_user]' }
+      - SSHUser.order(:name).each do |user|
+        - if @ssh_gateway.ssh_user && @ssh_gateway.ssh_user.id == user.id
+          %option{ value: user.id, selected: 'selected' }= user.name
+        - else
+          %option{ value: user.id }= user.name
+
+  .checkbox
+    %label
+      = f.check_box :active
+      Active
+
+  = f.submit submit_caption, class: 'btn btn-default'
+
+  = link_to 'Cancel', back_link, class: 'btn btn-link'

@@ -8,6 +8,9 @@ glance - what to expact from upgrading to a new version.
 
 ### Added
 
+- Support for accessing SolarLog stations via an SSH gateway, allowing secure
+  access to a station outside of the current network.
+
 ### Changed
 
 - Run container as non-privileged user

@@ -39,6 +39,21 @@ RSpec.describe SolarLogStation do
     end
   end
 
+  describe '#connection_mode' do
+    it 'returns :ssh_gateway if an SSH gateway is defined' do
+      # TODO: Allow creation via factory
+      user    = create(:ssh_user)
+      gateway = create(:ssh_gateway, ssh_user: user)
+      station = create(:solar_log_station, ssh_gateway: gateway)
+      expect(station.connection_mode).to eq :ssh_gateway
+    end
+
+    it 'returns :direct if direct connection is chosen' do
+      station = create(:solar_log_station)
+      expect(station.connection_mode).to eq :direct
+    end
+  end
+
   describe '::active' do
     it 'should return those which are active' do
       expect(SolarLogStation.active).to match_array([station_simple])

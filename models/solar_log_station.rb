@@ -15,6 +15,7 @@ class SolarLogStation < Sequel::Model
 
   many_to_many :solar_log_triggers, delay_pks: true
   one_to_many  :solar_log_data_points
+  many_to_one  :ssh_gateway,        delay_pks: true, class: :SSHGateway
 
   def data_point
     # TODO: Might be better to keep an FK pointing at most recent data point
@@ -30,7 +31,12 @@ class SolarLogStation < Sequel::Model
     logger.info "Updating data of station '#{ name }'"
 
     # TODO: Timezone should come from SolarLogStation
-    s = Sunscout::SolarLog::SolarLog.new(http_url, timezone: '+0200')
+    opts = { timezone: '+0200' }
+    if ssh_gateway
+      logger.info "Tunneling request via gateway '#{ ssh_gateway.name }'"
+      opts[:ssh_gateway] = ssh_gateway.ssh_gateway
+    end
+    s = Sunscout::SolarLog::SolarLog.new(http_url, opts)
     data_point = SolarLogDataPoint.new(
       power_ac:        s.power_ac,
       power_dc:        s.power_dc,
@@ -61,7 +67,12 @@ class SolarLogStation < Sequel::Model
       timestamp: s.time
     )
     add_solar_log_data_point(data_point)
-    update(checked_at: DateTime.now)
+    now = DateTime.now
+    update(checked_at: now)
+    if ssh_gateway
+      ssh_gateway.update(used_at: now)
+      ssh_gateway.ssh_user.update(used_at: now)
+    end
 
     logger.info 'Successfully updated data'
 
@@ -72,6 +83,14 @@ class SolarLogStation < Sequel::Model
     # Not pretty... But there's a whole slew of possible errors.
     logger.error "Exception while updating station data: #{ e.message }"
     raise
+  end
+
+  def connection_mode
+    if ssh_gateway
+      :ssh_gateway
+    else
+      :direct
+    end
   end
 
   def calculator

@@ -14,11 +14,17 @@ LouisXiv::App.controllers :solar_log_stations do
 
   post :new do
     obj_params = params.fetch('solar_log_station')
-    solar_log_station = SolarLogStation.new(
-      name: obj_params.fetch('name'),
-      http_url: obj_params.fetch('http_url'),
-      active: to_bool(obj_params.fetch('active'))
-    )
+    if obj_params.key? 'active'
+      obj_params['active'] = to_bool(obj_params['active'])
+    end
+    ssh_gateway_id = obj_params.delete('ssh_gateway')
+    ssh_gateway = if ssh_gateway_id && !ssh_gateway_id.empty?
+                    get_or_404(SSHGateway, ssh_gateway_id)
+                  else
+                    nil
+                  end
+    solar_log_station = SolarLogStation.new(obj_params)
+    solar_log_station.ssh_gateway = ssh_gateway
 
     if solar_log_station.valid?
       solar_log_station.save
@@ -49,11 +55,17 @@ LouisXiv::App.controllers :solar_log_stations do
     solar_log_station = get_or_404(SolarLogStation, params.fetch('id').to_i)
 
     obj_params = params.fetch('solar_log_station')
-    solar_log_station.set(
-      name: obj_params.fetch('name'),
-      http_url: obj_params.fetch('http_url'),
-      active: to_bool(obj_params.fetch('active', false))
-    )
+    if obj_params.key? 'active'
+      obj_params['active'] = to_bool(obj_params['active'])
+    end
+    ssh_gateway_id = obj_params.delete('ssh_gateway')
+    ssh_gateway = if ssh_gateway_id && !ssh_gateway_id.empty?
+                    get_or_404(SSHGateway, ssh_gateway_id)
+                  else
+                    nil
+                  end
+    solar_log_station.set(obj_params)
+    solar_log_station.ssh_gateway = ssh_gateway
 
     if solar_log_station.valid?
       solar_log_station.save

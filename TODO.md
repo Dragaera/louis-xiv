@@ -1,9 +1,9 @@
 # Todo
 
 # Feature
-- Access to hosts behind NAT/FW with Net::SSH::Gateway
 - Time/Date in trigger conditions
 - Logging of actions taken / triggers checked
+- 'Sucess' message on deletion
 
 - SolarLog: Schedule interval of station update
 - SolarLog: Data history (graphs)

@@ -106,4 +106,31 @@ FactoryGirl.define do
     sequence(:name) { |i| "SolarLog Station #{ i }" }
     sequence(:http_url) { |i| "http://solarlog-#{ i }.local" }
   end
+
+  factory :ssh_user, class: SSHUser do
+    sequence(:user) { |i| "ssh_user_#{ i }" }
+    sequence(:password) { |i| "ssh_pass_#{ i }" }
+    sequence(:private_key) { |i| "ssh_private_key_#{ i }" }
+
+    trait :with_ssh_gateways do
+      transient do
+        ssh_gateways_count 1
+        inactive_ssh_gateways_count 1
+      end
+
+      after(:create) do |user, evaluator|
+        evaluator.ssh_gateways_count.times do
+          user.add_ssh_gateway create(:ssh_gateway, :active)
+        end
+
+        evaluator.inactive_ssh_gateways_count.times do
+          user.add_ssh_gateway create(:ssh_gateway, :inactive)
+        end
+      end
+    end
+  end
+
+  factory :ssh_gateway, class: SSHGateway do
+    sequence(:host) { |i| "host_#{ i }" }
+  end
 end

@@ -1,0 +1,48 @@
+.page-header
+  %h1
+    SSH gateway
+    %small
+      = @ssh_gateway.name
+
+    - if @ssh_gateway.active?
+      %span.label.label-success
+        Active
+    - else
+      %span.label.label-default
+        Inactive
+
+.row
+  .col-md-6
+    %a.btn.btn-primary{ href: url(:ssh_gateways, :edit, id: @ssh_gateway.id) }
+      Edit
+      %span.glyphicon.glyphicon-edit
+
+    = form_tag url(:ssh_gateways, :delete, id: @ssh_gateway.id), method: 'post', class: 'btn' do
+      = submit_tag 'Delete', class: 'btn btn-danger'
+
+.row
+  .col-md-6
+    %h2 Details
+    %table.table.table-bordered
+      %tbody
+        %tr
+          %td Host
+          %td= @ssh_gateway.host
+        %tr
+          %td SSH User
+          %td= link_to "#{ @ssh_gateway.ssh_user.name } (#{ @ssh_gateway.ssh_user.user })", url(:ssh_users, :show, id: @ssh_gateway.ssh_user.id)
+        %tr
+          %td Used at
+          %td= pretty_print_date(@ssh_gateway.used_at, ago: true, alt: '(never)')
+        %tr
+          %td Created at
+          %td= pretty_print_date(@ssh_gateway.created_at, alt: '(never)')
+        %tr
+          %td Updated at
+          %td= pretty_print_date(@ssh_gateway.updated_at, alt: '(never)')
+
+  .col-md-6
+    %h2 Used for SolarLog stations
+    .list-group
+      - @ssh_gateway.solar_log_stations.each do |station|
+        = link_to(station.name, url(:solar_log_stations, :show, id: station.id), class: 'list-group-item')
