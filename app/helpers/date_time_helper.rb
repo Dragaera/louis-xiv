@@ -11,6 +11,14 @@ module LouisXiv
 
         out
       end
+
+      def seconds_to_offset(seconds)
+        min, _ = seconds.abs.divmod(60)
+        hour, min = min.divmod(60)
+        prefix = seconds >= 0 ? '+' : '-'
+
+        format("%s%02i%02i", prefix, hour, min)
+      end
     end
 
     helpers DateTimeHelper
