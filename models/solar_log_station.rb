@@ -11,6 +11,12 @@ class SolarLogStation < Sequel::Model
 
   def validate
     validates_presence [:name, :http_url]
+
+    begin
+      TZInfo::Timezone.get(timezone)
+    rescue TZInfo::InvalidTimezoneIdentifier
+      errors.add(:timezone, 'Invalid timezone identifier')
+    end
   end
 
   many_to_many :solar_log_triggers, delay_pks: true
