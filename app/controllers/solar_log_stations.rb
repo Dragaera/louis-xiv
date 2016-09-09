@@ -6,7 +6,10 @@ LouisXiv::App.controllers :solar_log_stations do
 
   get :new do
     @solar_log_station = session['solar_log_station'] || 
-                         SolarLogStation.new(active: true)
+                         SolarLogStation.new(
+                           active: true,
+                           timezone: Sequel.application_timezone.identifier
+    )
     session.delete 'solar_log_station'
 
     render 'new'
