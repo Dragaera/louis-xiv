@@ -10,6 +10,10 @@ glance - what to expact from upgrading to a new version.
 
 - Support for accessing SolarLog stations via an SSH gateway, allowing secure
   access to a station outside of the current network.
+- Timezone support:
+  - Settings for storage of timestamps in database, and presentation in
+    frontend.
+  - Timezone setting for each SolarLog station, to properly unify timestamps.
 
 ### Changed
 
