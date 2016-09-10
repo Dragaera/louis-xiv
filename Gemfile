@@ -60,4 +60,5 @@ end
 
 group :development do
   gem 'pry'
+  gem 'dotenv'
 end

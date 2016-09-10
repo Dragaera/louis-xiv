@@ -1,5 +1,6 @@
 # Git
 .git/
+.gitignore
 
 # SQLite DBs
 db/*.db
@@ -12,9 +13,13 @@ log/*
 # CTags
 tags
 
-# File with ENV variables
+# File with ENV variables for docker
 docker.env
 docker.env.dist
+
+# Dev-only files
+.env
+.rubocop.yml
 
 # Util script
 louis-docker.sh

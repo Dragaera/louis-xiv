@@ -10,3 +10,5 @@ db/seeds.private.rb
 bin/
 # File with env variables for docker
 docker.env
+# File with env variables for dev machine
+.env

@@ -11,6 +11,7 @@ GEM
     database_cleaner (1.5.3)
     dentaku (2.0.8)
     diff-lcs (1.2.5)
+    dotenv (2.1.1)
     enumerable-lazy (0.0.1)
     factory_girl (4.7.0)
       activesupport (>= 3.0.0)
@@ -138,6 +139,7 @@ PLATFORMS
 DEPENDENCIES
   database_cleaner
   dentaku
+  dotenv
   factory_girl
   haml
   httparty
