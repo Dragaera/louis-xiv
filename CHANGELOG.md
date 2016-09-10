@@ -8,6 +8,8 @@ glance - what to expact from upgrading to a new version.
 
 ### Added
 
+- Configuration of Unicorn worker processes and listen port.
+
 ### Changed
 
 ### Fixed

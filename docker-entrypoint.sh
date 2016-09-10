@@ -25,7 +25,7 @@ echo "Rack env: '$RACK_ENV'"
 case "$1" in
     application)
         echo "Starting application server..."
-        exec unicorn
+        exec unicorn -c unicorn.conf.rb
         ;;
     worker)
         echo "Starting worker..."

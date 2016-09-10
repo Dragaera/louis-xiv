@@ -174,3 +174,27 @@ Interval at which Resque workers pull for tasks, in seconds.
 Interval at which Resque's Scheduler checks whether there's tasks to be
 schedule or executed.
 
+### UNICORN
+
+#### UNICORN_LISTEN
+
+*Default: 8080*
+
+TCP port which unicorn will bind to.
+
+#### UNICORN_WORKERS
+
+*Default: 2*
+
+Number of unicorn workers which to spawn.
+
+In case of CPU-bound applications, this should be >= the number of the CPU
+cores you have. If you are bound by memory, use as many as you can support.
+
+If you have occasional slow jobs which are not CPU-bound, increasing it above
+the number of CPU cores can be a good idea.
+
+**Note**: Normally, unicorn can be told to increase/decrease the number of
+workers by sending it a TTIN/TTOU signal. However, those are not relayed by
+Tini, which means you must send the signal to the unicorn master directly, and
+can not send it to the container.
