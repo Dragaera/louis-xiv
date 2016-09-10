@@ -8,6 +8,21 @@ glance - what to expact from upgrading to a new version.
 
 ### Added
 
+### Changed
+
+### Fixed
+
+### Security
+
+### Deprecated
+
+### Removed
+
+
+## [0.2.0] - 2016-09-10
+
+### Added
+
 - Support for accessing SolarLog stations via an SSH gateway, allowing secure
   access to a station outside of the current network.
 - Timezone support:
@@ -23,12 +38,6 @@ glance - what to expact from upgrading to a new version.
 
 - Fix signal forwarding by using `exec` within docker entrypoint, ensuring the
 - spawned process is a direct child of tini.
-
-### Security
-
-### Deprecated
-
-### Removed
 
 
 ## [0.1.0] - 2016-09-05
