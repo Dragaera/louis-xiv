@@ -11,3 +11,10 @@ log/*
 
 # CTags
 tags
+
+# File with ENV variables
+docker.env
+docker.env.dist
+
+# Util script
+louis-docker.sh
