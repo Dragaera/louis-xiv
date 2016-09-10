@@ -6,7 +6,7 @@ Sequel.migration do
       String :name
       String :user,       null: false
       String :password
-      String :private_key
+      String :private_key, text: true # Private keys can be quite big.
       DateTime :used_at
       DateTime :created_at
       DateTime :updated_at
