@@ -5,10 +5,19 @@ LouisXiv::App.controllers :solar_log_stations do
   end
 
   get :new do
-    @solar_log_station = session['solar_log_station'] || 
+    # Can be either a symbol (:local, :utc) for basic behaviour, or an instance
+    # of TZInfo::Timezone for named timezones.
+    default_timezone = if Sequel.application_timezone.respond_to?(:identifier)
+                         Sequel.application_timezone.identifier
+                       else
+                         # In the case of 'local' there's no sensible way to find the corresponding timezone.
+                         # Offset is doable, but can't be mapped uniquely.
+                         'UTC'
+                       end
+    @solar_log_station = session['solar_log_station'] ||
                          SolarLogStation.new(
                            active: true,
-                           timezone: Sequel.application_timezone.identifier
+                           timezone: default_timezone
     )
     session.delete 'solar_log_station'
 
