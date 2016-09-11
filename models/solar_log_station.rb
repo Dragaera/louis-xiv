@@ -17,10 +17,19 @@ class SolarLogStation < Sequel::Model
   def validate
     validates_presence [:name, :http_url]
 
+    validates_max_length 255, [:name, :http_url]
+
     begin
       TZInfo::Timezone.get(timezone)
     rescue TZInfo::InvalidTimezoneIdentifier
       errors.add(:timezone, 'Invalid timezone identifier')
+    end
+
+    begin
+      # Might be `nil`
+      URI(http_url.to_s)
+    rescue URI::InvalidURIError
+      errors.add(:http_url, 'Invalid URL')
     end
   end
 

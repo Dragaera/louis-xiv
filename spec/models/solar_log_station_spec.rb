@@ -45,6 +45,14 @@ RSpec.describe SolarLogStation do
       station = build(:solar_log_station, timezone: 'Europe/London')
       expect(station).to be_valid
     end
+
+    it 'should validate #http_url being a valid URI' do
+      station = build(:solar_log_station, http_url: 'http://foo bar')
+      expect(station).to_not be_valid
+
+      station = build(:solar_log_station, http_url: 'http://foo.bar:8080/getjp')
+      expect(station).to be_valid
+    end
   end
 
   describe '#connection_mode' do

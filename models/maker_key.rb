@@ -17,6 +17,8 @@ class MakerKey < Sequel::Model
     validates_presence [:key, :name]
 
     validates_unique :key
+
+    validates_max_length 255, [:key, :name]
   end
 
   alias_method :active?, :active

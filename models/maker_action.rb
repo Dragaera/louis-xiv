@@ -11,6 +11,8 @@ class MakerAction < Sequel::Model
 
   def validate
     validates_presence [:name]
+
+    validates_max_length 255, :name
   end
 
   alias_method :active?, :active

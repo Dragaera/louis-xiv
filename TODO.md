@@ -33,7 +33,6 @@
 - Cleanup of historical data
 - Configuration: More extensive (sensible defaults!)
 - Setup documentation
-- Align model validations with db constraints (e.g. string length)
 
 # Dev
 - E2E specs

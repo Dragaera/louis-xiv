@@ -11,6 +11,9 @@ class SolarLogTrigger < Sequel::Model
 
   def validate
     validates_presence [:name, :condition]
+
+    validates_max_length 255, :name
+    validates_max_length 10_000, :condition
   end
 
   many_to_many :maker_actions,

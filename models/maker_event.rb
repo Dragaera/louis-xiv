@@ -17,6 +17,8 @@ class MakerEvent < Sequel::Model
     validates_presence [:event, :name]
 
     validates_unique :event
+
+    validates_max_length 255, :name
   end
 
   alias_method :active?, :active
