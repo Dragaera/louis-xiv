@@ -104,7 +104,7 @@ Do not change this value, unless you are certain of what you are doing.
 Define which DB adapter to use. Supported options:
 
 * `mysql2` for MySQL
-* `pg` for Postgres
+* `postgres` for Postgres
 * `sqlite` for SQLite
 
 #### DB_HOST
