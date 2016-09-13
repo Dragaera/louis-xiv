@@ -48,6 +48,9 @@ gem 'sqlite3'
 # For Sequel's named_timezone extension.
 gem 'tzinfo'
 
+# BCrypt. Doh
+gem 'bcrypt'
+
 # SolarLog API client
 gem 'sunscout', '~> 0.3.1'
 

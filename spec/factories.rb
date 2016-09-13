@@ -134,4 +134,9 @@ FactoryGirl.define do
   factory :ssh_gateway, class: SSHGateway do
     sequence(:host) { |i| "host_#{ i }" }
   end
+
+  factory :user do
+    sequence(:user) { |i| "user#{ i }" }
+    password 'sekkrit'
+  end
 end

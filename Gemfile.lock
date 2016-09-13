@@ -6,6 +6,7 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    bcrypt (3.1.11)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     database_cleaner (1.5.3)
@@ -137,6 +138,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt
   database_cleaner
   dentaku
   dotenv
@@ -162,4 +164,4 @@ DEPENDENCIES
   unicorn
 
 BUNDLED WITH
-   1.12.5
+   1.13.0

@@ -60,5 +60,9 @@ module LouisXiv
     #     render 'errors/500'
     #   end
     #
+    before do
+      # Don't redirect to login when going to login.
+      login unless request.route_obj.name.to_s == 'users login'
+    end
   end
 end

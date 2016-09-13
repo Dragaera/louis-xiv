@@ -30,6 +30,7 @@
   - Access levels
 
 # Ops
+- Postgres ssl mode
 - Cleanup of historical data
 - Configuration: More extensive (sensible defaults!)
 - Setup documentation

@@ -2,13 +2,15 @@
 
 This document represents a high-level overview of changes made to this project.
 It will not list every miniscule change, but will allow you to view - at a
-glance - what to expact from upgrading to a new version.
+glance - what to expect from upgrading to a new version.
 
 ## [unpublished]
 
 ### Added
 
-- Configuration of Unicorn worker processes and listen port.
+- Basic user management and authorization. No access levels, every user has
+  access to all resources, and can create new users himself.
+- Configuration of number of Unicorn worker processes and listen port.
 
 ### Changed
 
