@@ -68,6 +68,14 @@
                   = link_to 'Users', url(:ssh_users, :index)
                   = link_to 'Gateways', url(:ssh_gateways, :index)
 
+            %li.dropdown
+              %a.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', role: 'button' }
+                Admin 
+                %span.caret
+              %ul.dropdown-menu
+                %li
+                  = link_to 'Users', url(:users, :index)
+
           %p.navbar-text.navbar-right
             - user = logged_in?
             - if user
