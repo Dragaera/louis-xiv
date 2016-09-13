@@ -109,6 +109,7 @@ LouisXiv::App.controllers :users do
 
     user = User.authenticate(username, password)
     if user
+      user.update(used_at: DateTime.now)
       session['login_user'] = user
       redirect('/')
     else
