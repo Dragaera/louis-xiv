@@ -69,6 +69,14 @@
                   = link_to 'Gateways', url(:ssh_gateways, :index)
 
           %p.navbar-text.navbar-right
+            - user = logged_in?
+            - if user
+              = "Welcome #{ user.user }"
+              = link_to '(Logout)', url(:users, :logout)
+            - else
+              = link_to 'Login', url(:users, :login)
+
+          %p.navbar-text.navbar-right
             = "Version: #{ LouisXiv::VERSION }"
 
     .container

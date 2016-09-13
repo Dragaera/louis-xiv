@@ -98,4 +98,26 @@ LouisXiv::App.controllers :users do
     user.destroy
     redirect(url(:users, :index))
   end
+
+  get :login, map: '/login' do
+    render 'login'
+  end
+
+  post :login, map: '/login' do
+    username = params['user']
+    password = params['password']
+
+    user = User.authenticate(username, password)
+    if user
+      session['user'] = user
+      redirect('/')
+    else
+      redirect(url(:users, :login))
+    end
+  end
+
+  get :logout, map: '/logout' do
+    session.delete 'user'
+    redirect(url(:users, :login))
+  end
 end
