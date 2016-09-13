@@ -11,6 +11,8 @@ glance - what to expect from upgrading to a new version.
 - Basic user management and authorization. No access levels, every user has
   access to all resources, and can create new users himself.
 - Configuration of number of Unicorn worker processes and listen port.
+- Ability to call (arbitrary) rake tasks, and open a ruby shell, in Docker
+  container
 
 ### Changed
 

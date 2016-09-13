@@ -48,6 +48,14 @@ case "$1" in
         echo "Applying database migrations"
         exec rake sq:migrate
         ;;
+    rake)
+        echo "Calling Rake task $2"
+        exec rake $2
+        ;;
+    shell)
+        echo "Opening Padrino shell"
+        exec padrino c
+        ;;
 
     *)
         echo "Don't know what to do"
