@@ -109,7 +109,7 @@ LouisXiv::App.controllers :users do
 
     user = User.authenticate(username, password)
     if user
-      session['user'] = user
+      session['login_user'] = user
       redirect('/')
     else
       redirect(url(:users, :login))
@@ -117,7 +117,7 @@ LouisXiv::App.controllers :users do
   end
 
   get :logout, map: '/logout' do
-    session.delete 'user'
+    session.delete 'login_user'
     redirect(url(:users, :login))
   end
 end

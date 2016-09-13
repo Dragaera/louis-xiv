@@ -4,15 +4,15 @@ module LouisXiv
   class App
     module UsersHelper
       def login
-        if session.key? 'user'
-          session['user']
+        if session.key? 'login_user'
+          session['login_user']
         else
           redirect(url(:users, :login))
         end
       end
 
       def logged_in?
-        session['user']
+        session['login_user']
       end
     end
 
