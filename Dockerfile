@@ -1,4 +1,4 @@
-FROM ruby:2.3.1
+FROM ruby:2.3.3
 
 MAINTAINER Michael Senn <michael@morrolan.ch>
 
@@ -7,7 +7,7 @@ MAINTAINER Michael Senn <michael@morrolan.ch>
 EXPOSE 8080
 
 # Tiny Init. (Reap zombies, forward signals)
-ENV TINI_VERSION v0.10.0
+ENV TINI_VERSION v0.13.2
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 

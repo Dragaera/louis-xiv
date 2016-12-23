@@ -16,6 +16,8 @@ glance - what to expect from upgrading to a new version.
 
 ### Changed
 
+- Docker: Updates tini and ruby versions.
+
 ### Fixed
 
 ### Security
