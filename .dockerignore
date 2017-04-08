@@ -2,6 +2,9 @@
 .git/
 .gitignore
 
+# Vim temporary files
+*.swp
+
 # SQLite DBs
 db/*.db
 # Dev seed data
